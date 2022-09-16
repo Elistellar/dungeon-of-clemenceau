@@ -5,6 +5,7 @@ from pygame.sprite import Sprite
 from src.display.camera import Camera
 from src.entities.update_group import UpdateGroup
 from src.utils.consts import TILE_SIZE
+from src.world.physics import Physics
 
 
 class Entity(Sprite):
@@ -17,6 +18,7 @@ class Entity(Sprite):
         self.pos = pos + self.CENTER_POS
         self.image = sprite
         self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
+        self.hitbox = self.rect.inflate(-2, -2)
     
         self.direction = Vector2()
         self.speed = 0.3
@@ -27,7 +29,11 @@ class Entity(Sprite):
             self.direction = self.direction.normalize()
         
         self.pos.x += self.direction.x * dt * self.speed
-        self.pos.y += self.direction.y * dt * self.speed        
-
-        self.rect.x = self.pos.x
-        self.rect.y = self.pos.y
+        self.hitbox.x = self.pos.x
+        Physics.collide_x(self)
+        
+        self.pos.y += self.direction.y * dt * self.speed
+        self.hitbox.y = self.pos.y
+        Physics.collide_y(self)
+        
+        self.rect.center = self.hitbox.center 

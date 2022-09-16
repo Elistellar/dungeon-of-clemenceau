@@ -1,11 +1,12 @@
 from csv import reader as csv_reader
 from xml.etree.ElementTree import Element as XMLElement
 
-from pygame import Surface
+from pygame import Surface, Vector2
 from pygame.locals import SRCALPHA
 
 from src.utils.consts import ROOM_SIZE, TILE_SIZE
 from src.world.tmx.tileset import Tileset
+from src.world.tmx.tile import Tile
 
 
 class Layer:
@@ -18,10 +19,11 @@ class Layer:
         
         if single_image:
             self.surface = Surface((TILE_SIZE * ROOM_SIZE, TILE_SIZE * ROOM_SIZE), SRCALPHA)
-        
+        else:
+            self.tiles = []
+            
         raw_data = xml.find("data").text
         csv_data = csv_reader(raw_data.splitlines())
-       
        
         csv_data.__next__()
         for y, row in enumerate(csv_data):
@@ -37,4 +39,8 @@ class Layer:
                             x * TILE_SIZE,
                             y * TILE_SIZE,
                         )
+                    )
+                elif i:
+                    self.tiles.append(
+                        Tile(Vector2(x, y) * TILE_SIZE, tileset[i])
                     )
