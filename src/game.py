@@ -1,4 +1,3 @@
-from pygame.display import flip
 from pygame.event import get as get_events
 from pygame.locals import QUIT
 from pygame.math import Vector2
@@ -56,7 +55,7 @@ class Game:
         # level
         Camera.draw(cls.player)
         
-        flip()
+        Window.render()
     
     @classmethod
     def next_level(cls):
