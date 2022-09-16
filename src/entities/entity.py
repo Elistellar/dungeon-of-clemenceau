@@ -4,19 +4,19 @@ from pygame import Surface, Rect
 
 from src.display.camera import Camera
 from src.entities.update_group import UpdateGroup
-from src.display.resources_loader import ResourcesLoader
+from src.utils.consts import TILE_SIZE
 
 
 class Entity(Sprite):
     
-    CENTER_POS = Vector2(ResourcesLoader.TILE_SIZE) / 2
+    CENTER_POS = Vector2(TILE_SIZE) / 2
     
     def __init__(self, pos: Vector2, sprite: Surface):
         super().__init__(Camera, UpdateGroup)
         
         self.pos = pos + self.CENTER_POS
         self.image = sprite
-        self.rect = Rect(*self.pos, ResourcesLoader.TILE_SIZE, ResourcesLoader.TILE_SIZE)
+        self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
     
         self.direction = Vector2()
         self.speed = 0.3

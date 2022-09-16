@@ -7,7 +7,8 @@ from pygame.math import Vector2
 from src.display.resources_loader import ResourcesLoader
 from src.display.window import Window
 from src.display.camera import Camera
-from src.map.map import Map
+from src.world.generator import LevelGenerator
+from src.world.tmx.loader import TmxLoader
 from src.entities.player import Player
 from src.entities.update_group import UpdateGroup
 
@@ -21,12 +22,12 @@ class Game:
         # Initialization
         Window.create()
         ResourcesLoader.load()
+        TmxLoader.load()
         
         cls.running = True
         cls.clock = Clock()
         
         Camera.init()
-        Map.init()
         
         cls.player = Player(Vector2(0, 0))
         
@@ -59,7 +60,7 @@ class Game:
     
     @classmethod
     def next_level(cls):
-        cls.current_level = Map.generate_level(cls.player)
+        cls.current_level = LevelGenerator.generate(cls.player)
     
     @classmethod
     def quit(cls):

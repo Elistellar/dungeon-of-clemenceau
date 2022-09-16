@@ -1,0 +1,2 @@
+TILE_SIZE = 32
+ROOM_SIZE = 16

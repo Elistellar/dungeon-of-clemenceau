@@ -2,15 +2,13 @@ from pygame.image import load as load_img
 from pygame import Surface
 
 from src.utils.path import path
+from src.world.tmx.tileset import Tileset
+
 
 class ResourcesLoader:
     
-    TILE_SIZE = 32
-    
     IMG_DIR = "assets/textures/"
     imgs_names = {
-        "grass": "tileset/grass.png",
-        "sand": "tileset/sand.png",
         "player": "entities/player.png",
     }
     
@@ -20,12 +18,7 @@ class ResourcesLoader:
             key: load_img(path(cls.IMG_DIR + value)).convert_alpha()
             for key, value in cls.imgs_names.items()
         }
-        
-        cls.tile_surfaces = [
-            cls.imgs["grass"],
-            cls.imgs["sand"],
-        ]
-        
+                
         cls.sounds = {
         }
     
