@@ -9,7 +9,7 @@ from src.entities.entity import Entity
 class Player(Entity):
     
     def __init__(self, pos: Vector2):
-        super().__init__(pos, ResourcesLoader["img.player"])
+        super().__init__(pos, ResourcesLoader["img.balan"])
 
 
     def update(self, dt: int):
@@ -25,7 +25,7 @@ class Player(Entity):
         if keys[K_d]: # Right
             self.direction.x += 1
             
-        if keys[K_LSHIFT]:
+        if keys[K_LSHIFT]: # Sprint
             self.speed = self.speeds.RUN
         else:
             self.speed = self.speeds.WALK

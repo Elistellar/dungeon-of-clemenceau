@@ -8,7 +8,7 @@ class ResourcesLoader:
     
     IMG_DIR = "assets/textures/"
     imgs_names = {
-        "player": "entities/player.png",
+        "balan": "entities/balan.png",
     }
     
     @classmethod

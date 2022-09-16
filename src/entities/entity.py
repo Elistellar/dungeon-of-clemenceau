@@ -22,7 +22,7 @@ class Entity(Sprite):
         self.pos = pos + self.CENTER_POS
         self.image = sprite
         self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
-        self.hitbox = self.rect.inflate(-2, -2)
+        self.hitbox = self.rect.inflate(-14, -20)
     
         self.direction = Vector2()
         self.speed = self.speeds.WALK
