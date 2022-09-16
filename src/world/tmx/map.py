@@ -1,4 +1,5 @@
 from xml.etree.ElementTree import parse as XMLparse
+from pathlib import Path
 
 from pygame import Rect
 
@@ -10,7 +11,7 @@ from src.world.obstacles import Obstacle
 
 class Map:
     
-    def __init__(self, file_path):
+    def __init__(self, file_path: Path):
         tree = XMLparse(file_path)
         root = tree.getroot()
         

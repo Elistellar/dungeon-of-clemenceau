@@ -1,4 +1,5 @@
 from xml.etree.ElementTree import parse as XMLparse
+from pathlib import Path
 
 from pygame import Surface
 from pygame.image import load as load_image
@@ -12,7 +13,7 @@ class Tileset:
     tilesets = {}
     
     @classmethod
-    def load(cls, map_path, file_path) -> "Tileset":
+    def load(cls, map_path: Path, file_path: str) -> "Tileset":
         full_path = map_path.parent / file_path
         
         if full_path not in cls.tilesets:
@@ -20,7 +21,7 @@ class Tileset:
 
         return cls.tilesets[full_path]
     
-    def __init__(self, file_path) -> None:
+    def __init__(self, file_path: Path) -> None:
         tree = XMLparse(file_path)
         root = tree.getroot()
         image_path = file_path.parent / root.find("image").attrib["source"]

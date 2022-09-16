@@ -12,6 +12,10 @@ class Entity(Sprite):
     
     CENTER_POS = Vector2(TILE_SIZE) / 2
     
+    class speeds:
+        WALK = 0.15
+        RUN  = 0.25
+    
     def __init__(self, pos: Vector2, sprite: Surface):
         super().__init__(Camera, UpdateGroup)
         
@@ -21,7 +25,7 @@ class Entity(Sprite):
         self.hitbox = self.rect.inflate(-2, -2)
     
         self.direction = Vector2()
-        self.speed = 0.3
+        self.speed = self.speeds.WALK
     
     def update(self, dt: int):
         

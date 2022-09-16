@@ -1,5 +1,5 @@
 from pygame.key import get_pressed
-from pygame.locals import K_d, K_q, K_s, K_z
+from pygame.locals import K_d, K_q, K_s, K_z, K_LSHIFT
 from pygame.math import Vector2
 
 from src.display.resources_loader import ResourcesLoader
@@ -24,5 +24,10 @@ class Player(Entity):
             self.direction.y += 1
         if keys[K_d]: # Right
             self.direction.x += 1
+            
+        if keys[K_LSHIFT]:
+            self.speed = self.speeds.RUN
+        else:
+            self.speed = self.speeds.WALK
                     
         super().update(dt)
