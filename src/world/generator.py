@@ -3,7 +3,7 @@ from pygame import Vector2
 from src.display.camera import Camera
 from src.world.tmx.loader import TmxLoader
 from src.world.tmx.tile import Tile
-from src.world.obstacles import Obstacles
+from src.world.groups import Obstacles
 
 
 class LevelGenerator:
@@ -11,6 +11,7 @@ class LevelGenerator:
     @classmethod
     def generate(cls, player):
         Camera.empty()
+        Obstacles.empty()
         
         room = TmxLoader.rooms[0]
         

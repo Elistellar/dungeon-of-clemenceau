@@ -1,4 +1,4 @@
-from src.world.obstacles import Obstacles
+from src.world.groups import Obstacles
 
 
 class Physics:

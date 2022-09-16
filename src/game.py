@@ -8,7 +8,7 @@ from src.display.camera import Camera
 from src.display.resources_loader import ResourcesLoader
 from src.display.window import Window
 from src.entities.player import Player
-from src.entities.update_group import UpdateGroup
+from src.world.groups import UpdateGroup
 from src.world.generator import LevelGenerator
 from src.world.tmx.loader import TmxLoader
 

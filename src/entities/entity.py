@@ -3,7 +3,7 @@ from pygame.math import Vector2
 from pygame.sprite import Sprite
 
 from src.display.camera import Camera
-from src.entities.update_group import UpdateGroup
+from src.world.groups import UpdateGroup
 from src.utils.consts import TILE_SIZE
 from src.world.physics import Physics
 
