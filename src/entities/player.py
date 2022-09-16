@@ -1,6 +1,6 @@
-from pygame.math import Vector2
 from pygame.key import get_pressed
-from pygame.locals import K_z, K_q, K_s, K_d
+from pygame.locals import K_d, K_q, K_s, K_z
+from pygame.math import Vector2
 
 from src.display.resources_loader import ResourcesLoader
 from src.entities.entity import Entity

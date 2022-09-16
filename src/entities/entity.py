@@ -1,6 +1,6 @@
+from pygame import Rect, Surface
 from pygame.math import Vector2
 from pygame.sprite import Sprite
-from pygame import Surface, Rect
 
 from src.display.camera import Camera
 from src.entities.update_group import UpdateGroup

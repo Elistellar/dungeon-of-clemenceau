@@ -1,8 +1,7 @@
-from pygame.image import load as load_img
 from pygame import Surface
+from pygame.image import load as load_img
 
 from src.utils.path import path
-from src.world.tmx.tileset import Tileset
 
 
 class ResourcesLoader:

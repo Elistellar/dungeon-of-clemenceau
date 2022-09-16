@@ -1,6 +1,6 @@
-from pygame.sprite import Group
 from pygame.display import get_surface as get_screen
 from pygame.math import Vector2
+from pygame.sprite import Group
 
 from src.utils.hinting import HasRect
 

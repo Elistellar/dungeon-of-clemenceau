@@ -1,16 +1,16 @@
+from pygame.display import flip
 from pygame.event import get as get_events
 from pygame.locals import QUIT
-from pygame.time import Clock
-from pygame.display import flip
 from pygame.math import Vector2
+from pygame.time import Clock
 
+from src.display.camera import Camera
 from src.display.resources_loader import ResourcesLoader
 from src.display.window import Window
-from src.display.camera import Camera
-from src.world.generator import LevelGenerator
-from src.world.tmx.loader import TmxLoader
 from src.entities.player import Player
 from src.entities.update_group import UpdateGroup
+from src.world.generator import LevelGenerator
+from src.world.tmx.loader import TmxLoader
 
 
 class Game:

@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import parse as XMLparse
 
-from src.utils.consts import TILE_SIZE, ROOM_SIZE
+from src.utils.consts import ROOM_SIZE, TILE_SIZE
 from src.world.tmx.layer import Layer
 from src.world.tmx.tileset import Tileset
 

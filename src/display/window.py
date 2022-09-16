@@ -1,5 +1,5 @@
-from pygame.display import set_mode as create_window
 from pygame.display import set_caption
+from pygame.display import set_mode as create_window
 
 
 class Window:

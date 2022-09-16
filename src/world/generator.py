@@ -4,6 +4,7 @@ from src.display.camera import Camera
 from src.world.tmx.loader import TmxLoader
 from src.world.tmx.tile import Tile
 
+
 class LevelGenerator:
     
     @classmethod

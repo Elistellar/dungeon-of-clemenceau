@@ -1,5 +1,5 @@
-from xml.etree.ElementTree import Element as XMLElement
 from csv import reader as csv_reader
+from xml.etree.ElementTree import Element as XMLElement
 
 from pygame import Surface
 from pygame.locals import SRCALPHA
