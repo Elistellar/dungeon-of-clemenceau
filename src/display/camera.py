@@ -16,13 +16,13 @@ class _Camera(Group):
             
     def draw(self, center: HasRect):
 
-        display_surface = Window.surface
+        blit = Window.surface.blit
 
         self.offset = Vector2(center.rect.center) - self.screen_center
         
         for sprite in self.background.sprites() + sorted(self.sprites(), key=lambda s: s.rect.centery):
                         
-            display_surface.blit(
+            blit(
                 sprite.image,
                 sprite.rect.topleft - self.offset
             )

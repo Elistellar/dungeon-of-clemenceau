@@ -1,8 +1,10 @@
 from typing import Callable
 
 from pygame import Rect
+from pygame.draw import rect as draw_rect
 
 from src.display.hud.menu.components.component import Component
+from src.display.window import Window
 
 
 class Button(Component):
@@ -24,4 +26,14 @@ class Button(Component):
             self.is_hovered = False
             
     def render(self):
-        pass
+        
+        if self.is_hovered:
+            color = (200, 200, 200)
+        else:
+            color = (150, 150, 150)
+        
+        draw_rect(
+            Window.surface,
+            color,
+            self.rect
+        )

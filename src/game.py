@@ -63,19 +63,20 @@ class Game:
                     Component.left_click = True
                     
             elif event.type == KEYUP:
-                if EscapeMenu.is_open:
-                    EscapeMenu.close()
-                    
-                    if not EscapeMenu.is_open:
-                        cls.player.paused = False
-                else:
-                    EscapeMenu.open()
-                    cls.player.paused = True
+                if event.key == K_ESCAPE:
+                    if EscapeMenu.is_open:
+                        EscapeMenu.close()
+                        
+                        if not EscapeMenu.is_open:
+                            cls.player.paused = False
+                    else:
+                        EscapeMenu.open()
+                        cls.player.paused = True
                     
             elif event.type == QUIT:
                 cls.quit()
                 
-        Component.mouse_pos = get_mouse_pos
+        Component.mouse_pos = get_mouse_pos()
     
     @classmethod
     def render(cls):

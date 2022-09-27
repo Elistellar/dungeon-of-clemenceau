@@ -14,8 +14,8 @@ class EscapeMenu(Menu):
     # }
     
     components = {
-        Button("menu.resume",   (10, 10,  200, 50), Menu.close),
-        # Button("menu.settings", (10, 70,  200, 50), Menu.open_settings),
-        Button("menu.about",    (10, 130, 200, 50), about),
-        Button("menu.quit",     (10, 190, 200, 50), Menu.quit),
+        Button("menu.resume",   (540, 250, 200, 50), Menu.close),
+        # Button("menu.settings", (540, 310, 200, 50), Menu.open_settings),
+        Button("menu.about",    (540, 370, 200, 50), about),
+        Button("menu.quit",     (540, 430, 200, 50), Menu.quit),
     }

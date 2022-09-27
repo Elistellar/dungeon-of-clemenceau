@@ -1,9 +1,12 @@
 from typing import Any
 
+from pygame.event import post, Event
+from pygame.locals import QUIT
+
 from src.display.hud.menu.components.component import Component
 
 
-class MetaMenu:
+class MetaMenu(type):
     
     def __getattribute__(self, __name: str) -> Any:
         if "open_" in __name:
@@ -14,7 +17,7 @@ class MetaMenu:
 
 class Menu(metaclass=MetaMenu):
     
-    submenues: dict[str, "Menu"]
+    submenues: dict[str, "Menu"] = {}
     components: list[Component]
     
     is_open = False
@@ -51,3 +54,9 @@ class Menu(metaclass=MetaMenu):
             
         for component in cls.components:
             component.render()
+
+    @classmethod
+    def quit(cls):
+        print(post(Event(
+            QUIT
+        )))
