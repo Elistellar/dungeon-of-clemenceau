@@ -14,8 +14,7 @@ class Entity(Sprite):
     CENTER_POS = Vector2(TILE_SIZE) / 2
     
     # to overwite
-    SPRITE_SHEET: dict[str, list[tuple[int, int]]]
-    ANIMATION_SPEEDS: dict[str, int]
+    SPRITE_SHEET_NAME: str
     
     HITBOX = 0, 0
     
@@ -41,7 +40,7 @@ class Entity(Sprite):
         self.state = self.states.IDLEING
         self.orientation = Orientation.SOUTH
         
-        self.sprite_sheet = SpriteSheet(sprite_sheet_surface, self.SPRITE_SHEET, self.ANIMATION_SPEEDS)
+        self.sprite_sheet = SpriteSheet(self.SPRITE_SHEET_NAME)
         self.sprite_sheet.change_animation(self.get_animation_name())
         self.image = self.sprite_sheet.get_surface()
     
