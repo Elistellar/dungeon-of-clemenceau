@@ -1,5 +1,5 @@
-from src.display.hud.menu.menu import Menu
 from src.display.hud.menu.components.button import Button
+from src.display.hud.menu.menu import Menu
 
 
 class KeybindsMenu(Menu):

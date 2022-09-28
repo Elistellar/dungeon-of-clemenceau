@@ -1,7 +1,7 @@
 from webbrowser import open_new_tab
 
-from src.display.hud.menu.menu import Menu
 from src.display.hud.menu.components.button import Button
+from src.display.hud.menu.menu import Menu
 from src.display.hud.menu.settings import SettingsMenu
 
 

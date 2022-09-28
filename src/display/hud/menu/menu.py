@@ -1,6 +1,4 @@
-from typing import Any
-
-from pygame.event import post, Event
+from pygame.event import Event, post
 from pygame.locals import QUIT
 
 from src.display.hud.menu.components.component import Component

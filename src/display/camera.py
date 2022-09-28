@@ -1,8 +1,8 @@
 from pygame.math import Vector2
 from pygame.sprite import Group
 
-from src.utils.hinting import HasRect
 from src.display.window import Window
+from src.utils.hinting import HasRect
 
 
 class _Camera(Group):

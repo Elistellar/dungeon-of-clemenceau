@@ -1,9 +1,8 @@
-from pygame.display import set_caption
-from pygame.display import set_mode as create_window
-from pygame.display import flip
-from pygame.transform import scale
 from pygame import Surface
+from pygame.display import flip, set_caption
+from pygame.display import set_mode as create_window
 from pygame.locals import SRCALPHA
+from pygame.transform import scale
 
 
 class Window:

@@ -13,10 +13,10 @@ from src.display.sprite_sheet import SpriteSheet
 from src.display.window import Window
 from src.entities.player import Player
 from src.lang import Lang
+from src.settings import Settings
 from src.world.generator import LevelGenerator
 from src.world.groups import UpdateGroup
 from src.world.tmx.loader import TmxLoader
-from src.settings import Settings
 
 
 class Game:
