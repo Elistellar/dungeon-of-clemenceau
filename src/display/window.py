@@ -2,6 +2,8 @@ from pygame.display import set_caption
 from pygame.display import set_mode as create_window
 from pygame.display import flip
 from pygame.transform import scale
+from pygame import Surface
+from pygame.locals import SRCALPHA
 
 
 class Window:
@@ -19,6 +21,8 @@ class Window:
     def create(cls):
         cls._surface = create_window(cls.SIZE)
         cls.surface = cls._surface.copy()
+        cls.clean_hud_surface = Surface(cls._surface.get_size(), SRCALPHA)
+        cls.hud_surface = cls.clean_hud_surface.copy()
         set_caption(cls.TITLE)
 
     @classmethod
@@ -31,4 +35,9 @@ class Window:
             (0, 0),
             cls.CENTER_RECT
         )
+        cls._surface.blit(
+            cls.hud_surface,
+            (0, 0)
+        )
+        cls.hud_surface = cls.clean_hud_surface.copy()
         flip()

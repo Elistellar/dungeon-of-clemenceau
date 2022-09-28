@@ -1,19 +1,22 @@
 from pygame.event import get as get_events
-from pygame.locals import QUIT, MOUSEBUTTONUP, KEYUP, K_ESCAPE
+from pygame.locals import K_ESCAPE, KEYUP, MOUSEBUTTONUP, QUIT
 from pygame.math import Vector2
-from pygame.time import Clock
 from pygame.mouse import get_pos as get_mouse_pos
+from pygame.time import Clock
 
 from src.display.camera import Camera
+from src.display.hud.menu.components.component import Component
+from src.display.hud.menu.escape import EscapeMenu
+from src.display.hud.menu.loader import load_menus
 from src.display.resource_loader import ResourceLoader
 from src.display.sprite_sheet import SpriteSheet
 from src.display.window import Window
 from src.entities.player import Player
-from src.world.groups import UpdateGroup
+from src.lang import Lang
 from src.world.generator import LevelGenerator
+from src.world.groups import UpdateGroup
 from src.world.tmx.loader import TmxLoader
-from src.display.hud.menu.components.component import Component
-from src.display.hud.menu.escape import EscapeMenu
+from src.settings import Settings
 
 
 class Game:
@@ -22,12 +25,20 @@ class Game:
     
     @classmethod
     def start(cls):
-        # Initialization
+        # Initialization        
         Window.create()
+        
+        Settings.load()
+        
         ResourceLoader.load()
         SpriteSheet.load()
+        Lang.load(Lang.Langs(Settings["lang"]))
+        Component.init()
         TmxLoader.load()
         
+        load_menus()
+        
+        # declarations
         cls.running = True
         cls.clock = Clock()
         
@@ -50,6 +61,9 @@ class Game:
         UpdateGroup.update(dt)
         if EscapeMenu.is_open:
             EscapeMenu.update()
+            
+            if not EscapeMenu.is_open:
+                cls.player.paused = False
         
         cls.render()
     
@@ -59,7 +73,7 @@ class Game:
         for event in get_events():
             
             if event.type == MOUSEBUTTONUP:
-                if event.button == 0:
+                if event.button == 1:
                     Component.left_click = True
                     
             elif event.type == KEYUP:

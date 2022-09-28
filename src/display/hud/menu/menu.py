@@ -6,16 +6,7 @@ from pygame.locals import QUIT
 from src.display.hud.menu.components.component import Component
 
 
-class MetaMenu(type):
-    
-    def __getattribute__(self, __name: str) -> Any:
-        if "open_" in __name:
-            menu = self.submenues[__name.split("open_")[1]]
-            menu.open()
-        else:
-            return super().__getattribute__(__name)
-
-class Menu(metaclass=MetaMenu):
+class Menu:
     
     submenues: dict[str, "Menu"] = {}
     components: list[Component]
@@ -27,12 +18,16 @@ class Menu(metaclass=MetaMenu):
         cls.is_open = True
     
     @classmethod
+    def open_sub(cls, name: str):
+        cls.submenues[name].open()
+    
+    @classmethod
     def close(cls):
         for menu in cls.submenues.values():
             if menu.is_open:
                 menu.close()
                 return
-            
+        
         cls.is_open = False
     
     @classmethod
@@ -49,7 +44,7 @@ class Menu(metaclass=MetaMenu):
     def render(cls):
         for menu in cls.submenues.values():
             if menu.is_open:
-                menu.update()
+                menu.render()
                 return
             
         for component in cls.components:
@@ -57,6 +52,6 @@ class Menu(metaclass=MetaMenu):
 
     @classmethod
     def quit(cls):
-        print(post(Event(
+        post(Event(
             QUIT
-        )))
+        ))

@@ -1,0 +1,13 @@
+{
+    "menu.quit": "Quit",
+    "menu.resume": "Resume",
+    "menu.about": "About",
+    "menu.settings": "Settings",
+    "menu.keybinds": "Keybinds",
+    "menu.audio": "Audio",
+    "menu.lang": "Lang",
+    "menu.back": "Back",
+
+    "lang.fr": "French",
+    "lang.en": "English"
+}

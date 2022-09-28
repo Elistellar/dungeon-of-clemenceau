@@ -9,3 +9,8 @@ class Orientation(Enum):
     SOUTH = "south"
     EAST  = "east"
     WEST  = "west"
+
+
+COLOR_BTN_TEXT = (255, 255, 255)
+COLOR_BTN_BG = (150, 150, 150)
+COLOR_BTN_BG_HOVER = (200, 200, 200)
