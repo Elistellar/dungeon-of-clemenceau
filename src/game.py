@@ -1,19 +1,20 @@
 from pygame.event import get as get_events
 from pygame.locals import K_ESCAPE, KEYUP, MOUSEBUTTONUP, QUIT
 from pygame.math import Vector2
-from pygame.mouse import get_pos as get_mouse_pos
 from pygame.time import Clock
 
 from src.display.camera import Camera
 from src.display.hud.menu.components.component import Component
 from src.display.hud.menu.escape import EscapeMenu
 from src.display.hud.menu.loader import load_menus
+from src.display.mouse import Mouse
 from src.display.resource_loader import ResourceLoader
 from src.display.sprite_sheet import SpriteSheet
 from src.display.window import Window
 from src.entities.player import Player
 from src.lang import Lang
 from src.settings import Settings
+from src.sound import Sound
 from src.world.generator import LevelGenerator
 from src.world.groups import UpdateGroup
 from src.world.tmx.loader import TmxLoader
@@ -36,9 +37,11 @@ class Game:
         Component.init()
         TmxLoader.load()
         
+        Sound.load()
+        
         load_menus()
         
-        # declarations
+        # Declarations
         cls.running = True
         cls.clock = Clock()
         
@@ -69,7 +72,9 @@ class Game:
     
     @classmethod
     def handle_events(cls):
+        Component.keyup = None
         Component.left_click = False
+        
         for event in get_events():
             
             if event.type == MOUSEBUTTONUP:
@@ -79,18 +84,26 @@ class Game:
             elif event.type == KEYUP:
                 if event.key == K_ESCAPE:
                     if EscapeMenu.is_open:
-                        EscapeMenu.close()
                         
-                        if not EscapeMenu.is_open:
-                            cls.player.paused = False
+                        if Component.waiting_for_key:
+                            Component.waiting_for_key = False
+                            
+                        else:
+                            EscapeMenu.close()
+                            
+                            if not EscapeMenu.is_open:
+                                cls.player.paused = False
                     else:
                         EscapeMenu.open()
                         cls.player.paused = True
+                else:
+                    Component.keyup = event.key
                     
             elif event.type == QUIT:
                 cls.quit()
                 
-        Component.mouse_pos = get_mouse_pos()
+        Component.mouse_pos = Mouse.get_pos()
+        Component.left_click_hold = Mouse.get_pressed(0)
     
     @classmethod
     def render(cls):

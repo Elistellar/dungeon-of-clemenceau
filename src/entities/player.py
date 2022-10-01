@@ -4,6 +4,7 @@ from pygame.math import Vector2
 
 from src.display.resource_loader import ResourceLoader
 from src.entities.entity import Entity
+from src.settings import Settings
 
 
 class Player(Entity):
@@ -23,16 +24,16 @@ class Player(Entity):
         
         if not self.paused:
             keys = get_pressed()
-            if keys[K_z]: # Up
+            if keys[Settings["key.move_forward"]]:
                 self.direction.y -= 1
-            if keys[K_q]: # Left
+            if keys[Settings["key.move_left"]]:
                 self.direction.x -= 1
-            if keys[K_s]: # Down
+            if keys[Settings["key.move_backward"]]:
                 self.direction.y += 1
-            if keys[K_d]: # Right
+            if keys[Settings["key.move_right"]]:
                 self.direction.x += 1
                 
-            if keys[K_LSHIFT]: # Sprint
+            if keys[Settings["key.sprint"]]: # Sprint
                 self.speed = self.speeds.SPRINT
             else:
                 self.speed = self.speeds.WALK

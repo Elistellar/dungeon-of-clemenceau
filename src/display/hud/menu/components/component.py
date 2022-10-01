@@ -9,3 +9,6 @@ class Component:
     
     mouse_pos: tuple[int, int]
     left_click: bool
+    left_click_hold: bool
+    keyup: int | None
+    waiting_for_key = False

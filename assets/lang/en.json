@@ -9,5 +9,11 @@
     "menu.back": "Back",
 
     "lang.fr": "French",
-    "lang.en": "English"
+    "lang.en": "English",
+
+    "keybind.move_forward": "Move Up",
+    "keybind.move_backward": "Move Down",
+    "keybind.move_right": "Move Right",
+    "keybind.move_left": "Move Left",
+    "keybind.sprint": "Sprint"
 }

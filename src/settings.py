@@ -21,3 +21,5 @@ class Settings:
         
         with open(path("config.json"), "w", encoding="utf-8") as file:
             json_dump(cls.data, file, indent=4)
+            
+        return value

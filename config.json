@@ -1,3 +1,11 @@
 {
-    "lang": "en"
+    "lang": "en",
+    "volume.entity": 49,
+    "volume.menu": 52,
+    "volume.music": 53,
+    "key.move_forward": 122,
+    "key.move_backward": 115,
+    "key.move_left": 113,
+    "key.move_right": 100,
+    "key.sprint": 1073742049
 }

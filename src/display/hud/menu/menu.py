@@ -1,7 +1,10 @@
+from pygame import Surface
 from pygame.event import Event, post
-from pygame.locals import QUIT
+from pygame.locals import QUIT, SRCALPHA
 
 from src.display.hud.menu.components.component import Component
+from src.display.window import Window
+from src.utils.consts import WINDOW_SIZE
 
 
 class Menu:
@@ -10,6 +13,8 @@ class Menu:
     components: list[Component]
     
     is_open = False
+    background = Surface(WINDOW_SIZE, SRCALPHA)
+    background.fill((0, 0, 0, 200))
     
     @classmethod
     def open(cls):
@@ -44,7 +49,13 @@ class Menu:
             if menu.is_open:
                 menu.render()
                 return
-            
+        
+        # Draw current menu
+        Window.hud_surface.blit(
+            cls.background,
+            (0, 0)
+        )
+        
         for component in cls.components:
             component.render()
 

@@ -6,6 +6,7 @@ from pygame.draw import rect as draw_rect
 from src.display.hud.menu.components.component import Component
 from src.display.window import Window
 from src.lang import Lang
+from src.sound import Sound
 from src.utils.consts import COLOR_BTN_BG, COLOR_BTN_BG_HOVER, COLOR_BTN_TEXT
 
 
@@ -21,9 +22,12 @@ class Button(Component):
         
     def update(self):
         if self.rect.collidepoint(self.mouse_pos):
-            self.is_hovered = True
+            if not self.is_hovered:
+                Sound.play("btn_hover", "menu")
+                self.is_hovered = True
             
             if self.left_click:
+                Sound.play("btn_click", "menu")
                 self.on_click(*self.args)
         else:
             self.is_hovered = False
