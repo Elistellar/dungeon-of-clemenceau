@@ -7,6 +7,9 @@
     "menu.audio": "Audio",
     "menu.lang": "Lang",
     "menu.back": "Back",
+    "menu.audio.entity": "Entities",
+    "menu.audio.menu": "Menus",
+    "menu.audio.music": "Musics",
 
     "lang.fr": "French",
     "lang.en": "English",

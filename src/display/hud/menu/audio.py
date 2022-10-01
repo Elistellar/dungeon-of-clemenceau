@@ -10,8 +10,6 @@ class AudioMenu(Menu):
     @classmethod
     def init(cls):
         
-        print(Sound.channels["entity"])
-        
         cls.components = (
             Slider(
                 "menu.audio.entity", (490, 130, 300, 50), 0, 100,
