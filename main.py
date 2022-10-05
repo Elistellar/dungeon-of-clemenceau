@@ -5,7 +5,7 @@ from argparse import ArgumentParser, BooleanOptionalAction
 from src.logger import init_logger
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = ArgumentParser(description="Start Dungeon of Clemenceau")
     parser.add_argument(
         "-d", "--debug",
