@@ -6,6 +6,9 @@ from src.display.hud.menu.settings import SettingsMenu
 
 
 class EscapeMenu(Menu):
+    """
+    The menu opened on 'escape' presed
+    """
     
     submenues = {
         "settings": SettingsMenu,

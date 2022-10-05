@@ -2,6 +2,7 @@ from typing import Callable
 
 from pygame import Rect
 from pygame.draw import rect as draw_rect
+
 from src.display.hud.menu.components.component import Component
 from src.display.mouse import Mouse
 from src.display.window import Window
@@ -12,8 +13,23 @@ from src.utils.consts import (COLOR_BTN_BG, COLOR_BTN_BG_HOVER, COLOR_BTN_TEXT,
 
 
 class Slider(Component):
+    """
+    A slider components for menus
+    """
     
     def __init__(self, text: str, rect: tuple[int, int, int, int], min: int, max: int, setter: Callable[[int], None], init_value: int):
+        """
+        Create a new Slider.
+        
+        Parameters:
+            text (str): The text code to be written on the component label
+            rect (Tuple[int, int, int, int]): The position and size of the component (x, y, width, height)
+            min (int): the value which will be set when the slider is on the left 
+            max (int): the value which will be set when the slider is on the right
+            setter (Callable[[int], None]): A function which will be used to set the new value
+            init_value (int): The default value of the slider
+        """
+        
         self.rect = Rect(*rect)
         self.text = text
         

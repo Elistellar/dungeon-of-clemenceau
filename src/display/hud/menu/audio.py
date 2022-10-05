@@ -6,6 +6,9 @@ from src.sound import Sound
 
 
 class AudioMenu(Menu):
+    """
+    The 'Audio' settings menu
+    """
     
     @classmethod
     def init(cls):

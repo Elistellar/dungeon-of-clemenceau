@@ -6,6 +6,9 @@ from src.utils.path import path
 
 
 class Lang:
+    """
+    Handle all texts.
+    """
     
     class Langs(Enum):
         FR = "fr"
@@ -19,5 +22,8 @@ class Lang:
         Settings.set("lang", lang.value)
             
     def __class_getitem__(cls, key: str) -> str:
+        """
+        Returns the text associated to the given code.
+        """
         return cls.data.get(key, key)
         

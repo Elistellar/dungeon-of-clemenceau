@@ -9,6 +9,9 @@ from src.utils.path import path
 
 
 class ResourceLoader:
+    """
+    Handle all resources to not load them several times.
+    """
     
     IMG_DIR = "assets/textures/"
     imgs_names = {

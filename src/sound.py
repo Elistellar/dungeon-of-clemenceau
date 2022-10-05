@@ -3,6 +3,9 @@ from src.settings import Settings
 
 
 class Sound:
+    """
+    Handle all sounds.
+    """
     
     channels = {
         "entity": 50, 

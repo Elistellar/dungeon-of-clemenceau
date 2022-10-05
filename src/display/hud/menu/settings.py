@@ -6,7 +6,10 @@ from src.display.hud.menu.menu import Menu
 
 
 class SettingsMenu(Menu):
-
+    """
+    The 'Settings' menu
+    """
+    
     submenues = {
         "keybinds": KeybindsMenu,
         "audio": AudioMenu,

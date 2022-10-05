@@ -6,6 +6,10 @@ from src.utils.hinting import HasRect
 
 
 class _Camera(Group):
+    """
+    The group used to render all sprites on screen, except hud.
+    Render the background first, then all sprites from lowest 'y' to highest.
+    """
     
     @classmethod
     def init(cls):
@@ -15,6 +19,9 @@ class _Camera(Group):
         cls.background = Group()
             
     def draw(self, center: HasRect):
+        """
+        Render all game sprites, centered on the 'center' passed.
+        """
 
         blit = Window.surface.blit
 
@@ -28,6 +35,9 @@ class _Camera(Group):
             )
             
     def empty(self):
+        """
+        Clear all sprites in the camera/
+        """
         self.background.empty()
         super().empty()
 

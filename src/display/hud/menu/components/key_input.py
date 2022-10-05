@@ -13,8 +13,20 @@ from src.utils.consts import COLOR_BTN_BG, COLOR_BTN_BG_HOVER, COLOR_BTN_TEXT
 
 
 class KeyInput(Component):
+    """
+    A menu component use to set a keybind
+    """
     
     def __init__(self, text: str, rect: tuple[int, int, int, int], setter: Callable[[int], None], getter: Callable[[], int]):
+        """
+        Create a new KeyInput.
+        
+        Parameters:
+            text (str): The text code to be written on the component label
+            rect (Tuple[int, int, int, int]): The position and size of the component (x, y, width, height)
+            setter (Callable[[int], None]): A function which will be used to set the key entered
+            args (Callable[[], int]): A function which will be used to get the current key
+        """
         self.rect = Rect(*rect)
         
         self.is_hovered = False
@@ -25,7 +37,7 @@ class KeyInput(Component):
         self.text = text
         
     def update(self):
-        
+        # Waiting for a key to be pressed
         if self._waiting_for_key and self.waiting_for_key:
             if self.keyup:
                 self.setter(self.keyup)
@@ -33,15 +45,18 @@ class KeyInput(Component):
                 self._waiting_for_key = False
                 self.waiting_for_key = False
         
+        # Reset on 'escape' pressed 
         elif self._waiting_for_key and not self.waiting_for_key:
             self._waiting_for_key = False
         
         else:
+            # Hovering
             if self.rect.collidepoint(self.mouse_pos):
                 if not self.is_hovered:
                     Sound.play("btn_hover", "menu")
                     self.is_hovered = True
                 
+                # Click
                 if self.left_click:
                     Sound.play("btn_click", "menu")
                     Mouse.disable()

@@ -6,6 +6,9 @@ from src.display.resource_loader import ResourceLoader
 
 
 class SpriteSheet:
+    """
+    Handle the animation of a sprite.
+    """
     
     FRAMES = {
         "balan": {
@@ -66,7 +69,6 @@ class SpriteSheet:
             ResourceLoader.add_animation(sprite_name, surfaces)
     
     def __init__(self, name: str):
-        
         self.frames = ResourceLoader[f"anim.{name}"]
         self.speeds = self.SPEEDS[name]
         
@@ -76,7 +78,7 @@ class SpriteSheet:
         self.current_speed = self.speeds[animation_name]
         self.current_frame_idx = 0
         
-    def update(self, dt: int):            
+    def update(self, dt: int): # TODO : take care of 'dt'
         self.current_frame_idx += self.current_speed
         self.current_frame_idx %= len(self.current_animation)
 

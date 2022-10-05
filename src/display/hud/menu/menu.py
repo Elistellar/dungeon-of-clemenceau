@@ -8,6 +8,9 @@ from src.utils.consts import WINDOW_SIZE
 
 
 class Menu:
+    """
+    A base class for all menus.
+    """
     
     submenues: dict[str, "Menu"] = {}
     components: list[Component]
@@ -22,35 +25,52 @@ class Menu:
     
     @classmethod
     def open_sub(cls, name: str):
+        """
+        Open the 'name' submenue. It needs to be in the 'submenues' dict.
+        """
         cls.submenues[name].open()
     
     @classmethod
     def close(cls):
+        """
+        Close a submenue if one is opened. Else, close this menu.
+        """
+        # Submenu
         for menu in cls.submenues.values():
             if menu.is_open:
                 menu.close()
                 return
         
+        # This menu
         cls.is_open = False
     
     @classmethod
     def update(cls):
+        """
+        Update a submenue if one is opened. Else, update this menu.
+        """
+        # Submenu
         for menu in cls.submenues.values():
             if menu.is_open:
                 menu.update()
                 return
         
+        # This menu
         for component in cls.components:
             component.update()
     
     @classmethod
     def render(cls):
+        """
+        Render a submenue if one is opened. Else, render this menu.
+        """
+        # Submenu
         for menu in cls.submenues.values():
             if menu.is_open:
                 menu.render()
                 return
         
-        # Draw current menu
+        # This menu
         Window.hud_surface.blit(
             cls.background,
             (0, 0)
@@ -61,6 +81,9 @@ class Menu:
 
     @classmethod
     def quit(cls):
+        """
+        Quit the game
+        """
         post(Event(
             QUIT
         ))

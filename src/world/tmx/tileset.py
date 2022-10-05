@@ -9,11 +9,17 @@ from src.utils.consts import TILE_SIZE
 
 
 class Tileset:
+    """
+    Represent a tmx tileset
+    """
     
     tilesets = {}
     
     @classmethod
     def load(cls, map_path: Path, file_path: str) -> "Tileset":
+        """
+        Load a tileset if it has not been loaded yet, and returns it.
+        """
         full_path = map_path.parent / file_path
         
         if full_path not in cls.tilesets:
@@ -21,7 +27,7 @@ class Tileset:
 
         return cls.tilesets[full_path]
     
-    def __init__(self, file_path: Path) -> None:
+    def __init__(self, file_path: Path):
         tree = XMLparse(file_path)
         root = tree.getroot()
         image_path = file_path.parent / root.find("image").attrib["source"]

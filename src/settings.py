@@ -6,6 +6,9 @@ from src.utils.path import path
 
 
 class Settings:
+    """
+    Handle all settings.
+    """
     
     @classmethod
     def load(cls):
@@ -17,6 +20,9 @@ class Settings:
     
     @classmethod
     def set(cls, key: str, value: Any) -> Any:
+        """
+        Save the given setting and returns it.
+        """
         cls.data[key] = value
         
         with open(path("config.json"), "w", encoding="utf-8") as file:

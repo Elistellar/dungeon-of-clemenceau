@@ -1,4 +1,4 @@
-from pygame import Rect, Surface
+from pygame import Rect
 from pygame.math import Vector2
 from pygame.sprite import Sprite
 
@@ -10,6 +10,9 @@ from src.world.physics import Physics
 
 
 class Entity(Sprite):
+    """
+    A base class for all entities.
+    """
     
     CENTER_POS = Vector2(TILE_SIZE) / 2
     
@@ -28,15 +31,16 @@ class Entity(Sprite):
         SPRINTING = "sprint"
         ATTACKING = "attack"
     
-    def __init__(self, pos: Vector2, sprite_sheet_surface: Surface):
+    def __init__(self, pos: Vector2):
         super().__init__(Camera, UpdateGroup)
         
         self.pos = pos + self.CENTER_POS
-        self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
-        self.hitbox = self.rect.inflate(self.HITBOX)
-        
         self.direction = Vector2()
         self.speed = self.speeds.WALK
+        
+        self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
+        self.hitbox = self.rect.inflate(self.HITBOX)
+            
         self.state = self.states.IDLEING
         self.orientation = Orientation.SOUTH
         
@@ -48,6 +52,13 @@ class Entity(Sprite):
         return self.state + "." + self.orientation.value
     
     def update(self, dt: int):
+        """
+        Update (in order) :
+        - The state (IDELING, WALKING or SPRINTING)
+        - The orientation (NORTH, ...)
+        - The animation
+        - The position
+        """
         
         # State
         if self.direction.magnitude() == 0:

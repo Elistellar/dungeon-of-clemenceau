@@ -10,8 +10,14 @@ from src.world.obstacles import Obstacle
 
 
 class Map:
+    """
+    Represent a tmx map.
+    """
     
     def __init__(self, file_path: Path):
+        """
+        Load the given tmx map.
+        """
         tree = XMLparse(file_path)
         root = tree.getroot()
         

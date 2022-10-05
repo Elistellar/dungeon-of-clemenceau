@@ -1,10 +1,21 @@
+from typing import TYPE_CHECKING
+
 from src.world.groups import Obstacles
+
+if TYPE_CHECKING:
+    from src.entities.entity import Entity
 
 
 class Physics:
+    """
+    Handle all game physics.
+    """
     
     @staticmethod
-    def collide_x(entity):
+    def collide_x(entity: "Entity"):
+        """
+        Compute the horizontal collision between the given entity and the obstacle group.
+        """
         for sprite in Obstacles.sprites():
             if entity.hitbox.colliderect(sprite.rect):
                 if entity.direction.x > 0:
@@ -15,7 +26,10 @@ class Physics:
                     entity.hitbox.left = sprite.rect.right
 
     @staticmethod
-    def collide_y(entity):
+    def collide_y(entity: "Entity"):
+        """
+        Compute the horizontal collision between the given entity and the obstacle group.
+        """
         for sprite in Obstacles.sprites():
             if entity.hitbox.colliderect(sprite.rect):
                 

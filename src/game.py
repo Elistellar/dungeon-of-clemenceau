@@ -15,14 +15,16 @@ from src.entities.player import Player
 from src.lang import Lang
 from src.settings import Settings
 from src.sound import Sound
+from src.utils.consts import FRAMERATE
 from src.world.generator import LevelGenerator
 from src.world.groups import UpdateGroup
 from src.world.tmx.loader import TmxLoader
 
 
 class Game:
-        
-    FRAMERATE = 60
+    """
+    The main game class, where the loop stands.
+    """
     
     @classmethod
     def start(cls):
@@ -52,7 +54,7 @@ class Game:
         cls.next_level()
         
         while cls.running:
-            cls.clock.tick(cls.FRAMERATE)
+            cls.clock.tick(FRAMERATE)
             cls.mainloop()
     
     @classmethod

@@ -5,6 +5,9 @@ from src.settings import Settings
 
 
 class KeybindsMenu(Menu):
+    """
+    The 'Keybinds' settings menu
+    """
     
     @classmethod
     def init(cls):

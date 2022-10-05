@@ -6,6 +6,9 @@ from src.display.hud.menu.settings import SettingsMenu
 
 
 def load_menus():
+    """
+    Load all menus.
+    """
     EscapeMenu.init()
     SettingsMenu.init()
     KeybindsMenu.init()

@@ -5,6 +5,9 @@ from src.lang import Lang
 
 
 class LangMenu(Menu):
+    """
+    The 'Lang' settings menu
+    """
     
     @classmethod
     def init(cls):

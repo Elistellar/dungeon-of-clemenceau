@@ -8,6 +8,9 @@ from src.utils.consts import WINDOW_SIZE
 
 
 class Window:
+    """
+    Handle the window.
+    """
     
     TITLE = "Dungeon Of Clemenceau"
     

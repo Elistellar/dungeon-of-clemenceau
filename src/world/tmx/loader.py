@@ -13,10 +13,14 @@ class TmxLoader:
     
     @classmethod
     def load(cls):
+        """
+        Load all tmx rooms.
+        """
+        
         for fpath in cls.room_paths:
-            # try:
-            cls.rooms.append(
-                Map(path(cls.ROOM_DIR + fpath))
-            )
-            # except:
-            #     raise ValueError(f"Corrupted file : {fpath}")
+            try:
+                cls.rooms.append(
+                    Map(path(cls.ROOM_DIR + fpath))
+                )
+            except:
+                raise ValueError(f"Corrupted file : {fpath}")

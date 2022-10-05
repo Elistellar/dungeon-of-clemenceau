@@ -10,8 +10,17 @@ from src.world.tmx.tile import Tile
 
 
 class Layer:
+    """
+    Represent a tmx layer.
+    """
     
     def __init__(self, xml: XMLElement, tileset: Tileset, single_image = False):
+        """
+        Parameters:
+            xml (XMLElement): the layer data.
+            tileset (Tileset): the tileset object.
+            single_image (bool): if True, load all tileset as a single image. Else, each tile will be load as a Sprite.
+        """
         
         if xml.attrib.get("width")  != str(ROOM_SIZE) \
         or xml.attrib.get("height") != str(ROOM_SIZE):

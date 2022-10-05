@@ -2,6 +2,10 @@ from src.display.resource_loader import ResourceLoader
 
 
 class Component:
+    """
+    A base class for all menu components.
+    Handle all events required by subclasses.
+    """
     
     @classmethod
     def init(cls):

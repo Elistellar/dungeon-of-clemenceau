@@ -1,6 +1,7 @@
 from enum import Enum
 
 WINDOW_SIZE = 1280, 720
+FRAMERATE = 60
 
 TILE_SIZE = 32
 ROOM_SIZE = 16
