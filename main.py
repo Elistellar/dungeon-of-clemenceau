@@ -24,6 +24,9 @@ if __name__ == "__main__":
 
         Game.start()
     
+    except SystemExit:
+        pass
+    
     except:        
         error = format_exc()
         log.error(error)
