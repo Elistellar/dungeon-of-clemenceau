@@ -10,6 +10,8 @@ def path(r_path: str, on_not_found: Callable[[Path], None] = None, raise_on_not_
     
     Parameters:
         r_path (str): A relative path form the project root directory.
+        on_not_found (Callable[[Path], None]): A function which will be called if the file does not exist.
+        raise_on_not_found (bool): If True and the file does not exist, a FileNotFoundError will be raise.
         
     Returns (Path):
         An absolute path for the disk root directory.

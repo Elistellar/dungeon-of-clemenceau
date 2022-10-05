@@ -6,11 +6,14 @@ from src.utils.path import path
 
 
 def init_logger(debug: bool):
+    """
+    Init the game logger
+    """
     
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
     
     handlers = [
-        log.StreamHandler()
+        log.StreamHandler(),
     ]
     
     if not debug:
