@@ -69,7 +69,7 @@ class Game:
         dt = cls.clock.get_time()
         
         cls.handle_events()
-        
+
         UpdateGroup.update(dt)
         if EscapeMenu.is_open:
             EscapeMenu.update()
@@ -133,4 +133,5 @@ class Game:
     @classmethod
     def quit(cls):
         cls.running = False
+        log.info("Closing game")
         exit(0)

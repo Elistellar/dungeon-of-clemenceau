@@ -24,5 +24,9 @@ if __name__ == '__main__':
 
         Game.start()
     
-    except:
-        log.error(format_exc())
+    except:        
+        error = format_exc()
+        log.error(error)
+        
+        from src.display.error_window import show_game_crash_window
+        show_game_crash_window(error)
