@@ -10,7 +10,7 @@ class EscapeMenu(Menu):
     The menu opened on 'escape' presed
     """
     
-    submenues = {
+    submenus = {
         "settings": SettingsMenu,
     }
     

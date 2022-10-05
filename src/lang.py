@@ -1,3 +1,4 @@
+import logging as log
 from enum import Enum
 from json import load as json_load
 
@@ -16,6 +17,7 @@ class Lang:
     
     @classmethod
     def load(cls, lang: Langs):
+        log.info(f"Lang changed ({lang.value})")
         with open(path("assets/lang/" + lang.value + ".json"), encoding="utf-8") as file:
             cls.data = json_load(file)
             

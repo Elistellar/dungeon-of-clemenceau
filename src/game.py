@@ -1,3 +1,5 @@
+import logging as log
+
 from pygame.event import get as get_events
 from pygame.locals import K_ESCAPE, KEYUP, MOUSEBUTTONUP, QUIT
 from pygame.math import Vector2
@@ -28,22 +30,8 @@ class Game:
     
     @classmethod
     def start(cls):
-        # Initialization        
-        Window.create()
+        cls.load()
         
-        Settings.load()
-        
-        ResourceLoader.load()
-        SpriteSheet.load()
-        Lang.load(Lang.Langs(Settings["lang"]))
-        Component.init()
-        TmxLoader.load()
-        
-        Sound.load()
-        
-        load_menus()
-        
-        # Declarations
         cls.running = True
         cls.clock = Clock()
         
@@ -56,6 +44,25 @@ class Game:
         while cls.running:
             cls.clock.tick(FRAMERATE)
             cls.mainloop()
+            
+    @classmethod
+    def load(cls):
+        log.info("Loading game")
+        Window.create()
+        
+        log.info("Loading settings")
+        Settings.load()
+        Sound.load()
+        
+        log.info("Loading resources :")
+        ResourceLoader.load()
+        SpriteSheet.load()
+        TmxLoader.load()
+        Lang.load(Lang.Langs(Settings["lang"]))
+        
+        log.info("Loading menus")
+        Component.init()
+        load_menus()
     
     @classmethod
     def mainloop(cls):

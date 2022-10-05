@@ -10,7 +10,7 @@ class SettingsMenu(Menu):
     The 'Settings' menu
     """
     
-    submenues = {
+    submenus = {
         "keybinds": KeybindsMenu,
         "audio": AudioMenu,
         "lang": LangMenu,

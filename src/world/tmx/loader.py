@@ -1,3 +1,5 @@
+import logging as log
+
 from src.utils.path import path
 from src.world.tmx.map import Map
 
@@ -16,7 +18,7 @@ class TmxLoader:
         """
         Load all tmx rooms.
         """
-        
+        log.info("- tmx")
         for fpath in cls.room_paths:
             try:
                 cls.rooms.append(

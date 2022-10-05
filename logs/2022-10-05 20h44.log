@@ -1,0 +1,17 @@
+[20:44:15] [MainThread] [INFO] Loading game
+[20:44:15] [MainThread] [INFO] Loading settings
+[20:44:15] [MainThread] [INFO] Loading resources :
+[20:44:15] [MainThread] [INFO] - images
+[20:44:15] [MainThread] [INFO] - sounds
+[20:44:15] [MainThread] [INFO] - fonts
+[20:44:15] [MainThread] [INFO] - spritesheets
+[20:44:15] [MainThread] [INFO] - tmx
+[20:44:15] [MainThread] [INFO] Lang changed (en)
+[20:44:15] [MainThread] [INFO] Loading menus
+[20:44:15] [MainThread] [ERROR] Traceback (most recent call last):
+  File "main.py", line 25, in <module>
+    Game.start()
+  File "D:\Documents\Dev\DungeonOfClemenceau\py\src\game.py", line 35, in start
+    1/0
+ZeroDivisionError: division by zero
+

@@ -12,7 +12,7 @@ class Menu:
     A base class for all menus.
     """
     
-    submenues: dict[str, "Menu"] = {}
+    submenus: dict[str, "Menu"] = {}
     components: list[Component]
     
     is_open = False
@@ -26,17 +26,17 @@ class Menu:
     @classmethod
     def open_sub(cls, name: str):
         """
-        Open the 'name' submenue. It needs to be in the 'submenues' dict.
+        Open the 'name' submenu. It needs to be in the 'submenus' dict.
         """
-        cls.submenues[name].open()
+        cls.submenus[name].open()
     
     @classmethod
     def close(cls):
         """
-        Close a submenue if one is opened. Else, close this menu.
+        Close a submenu if one is opened. Else, close this menu.
         """
         # Submenu
-        for menu in cls.submenues.values():
+        for menu in cls.submenus.values():
             if menu.is_open:
                 menu.close()
                 return
@@ -47,10 +47,10 @@ class Menu:
     @classmethod
     def update(cls):
         """
-        Update a submenue if one is opened. Else, update this menu.
+        Update a submenu if one is opened. Else, update this menu.
         """
         # Submenu
-        for menu in cls.submenues.values():
+        for menu in cls.submenus.values():
             if menu.is_open:
                 menu.update()
                 return
@@ -62,10 +62,10 @@ class Menu:
     @classmethod
     def render(cls):
         """
-        Render a submenue if one is opened. Else, render this menu.
+        Render a submenu if one is opened. Else, render this menu.
         """
         # Submenu
-        for menu in cls.submenues.values():
+        for menu in cls.submenus.values():
             if menu.is_open:
                 menu.render()
                 return

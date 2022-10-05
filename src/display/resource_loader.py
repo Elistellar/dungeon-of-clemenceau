@@ -1,3 +1,5 @@
+import logging as log
+
 from pygame import Surface
 from pygame.font import Font
 from pygame.font import init as init_fonts
@@ -33,17 +35,20 @@ class ResourceLoader:
     
     @classmethod
     def load(cls):
+        log.info("- images")
         cls.imgs = {
             name: load_img(path(cls.IMG_DIR + value)).convert_alpha()
             for name, value in cls.imgs_names.items()
         }
         
+        log.info("- sounds")
         init_sounds()
         cls.sounds = {
             name: Sound(path(cls.SOUND_DIR + value))
             for name, value in cls.sounds_names.items()
         }
         
+        log.info("- fonts")
         init_fonts()
         cls.fonts = {
             name: Font(path(cls.FONT_DIR + data[0]), data[1])

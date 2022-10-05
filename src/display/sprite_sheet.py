@@ -1,3 +1,5 @@
+import logging as log
+
 from pygame import Surface
 from pygame.locals import SRCALPHA
 
@@ -46,7 +48,7 @@ class SpriteSheet:
     
     @classmethod
     def load(cls):
-        
+        log.info("- spritesheets")
         for sprite_name, frames in cls.FRAMES.items():
             surface = ResourceLoader[f"img.{sprite_name}"]
             
