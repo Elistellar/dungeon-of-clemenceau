@@ -28,5 +28,6 @@ if __name__ == "__main__":
         error = format_exc()
         log.error(error)
         
-        from src.display.error_window import show_game_crash_window
-        show_game_crash_window(error)
+        if not args.debug:
+            from src.display.error_window import show_game_crash_window
+            show_game_crash_window(error)

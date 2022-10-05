@@ -31,7 +31,7 @@ class Game:
     @classmethod
     def start(cls):
         cls.load()
-        
+
         cls.running = True
         cls.clock = Clock()
         
