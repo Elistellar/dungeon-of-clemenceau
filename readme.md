@@ -24,6 +24,7 @@
 #### Grégoire
  - droites "paralleles" -> traumatise tous les enemies (assomes)
  - patate de lumière continue -> grande zone de lumière qui fait des degats ? 
+ - un truc avec des formules non homogènes ?
 
 #### Balan (le boss final)
  - craie -> dessine croix
