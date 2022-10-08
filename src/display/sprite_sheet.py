@@ -27,6 +27,12 @@ class SpriteSheet:
             "sprint.east": [(2, 0), (2, 1), (2, 0), (2, 2)],
             "sprint.west": [(3, 0), (3, 1), (3, 0), (3, 2)],
         },
+        "book": {
+            "south": [(0, 0)],
+            "north": [(1, 0)],
+            "east": [(2, 0)],
+            "west": [(3, 0)],
+        }
     }
     
     SPEEDS = {
@@ -44,6 +50,12 @@ class SpriteSheet:
             "sprint.east": 0.25,
             "sprint.west": 0.25,
         },
+        "book": {
+            "north": 1,
+            "south": 1,
+            "east": 1,
+            "west": 1,
+        }
     }
     
     @classmethod

@@ -18,6 +18,7 @@ class ResourceLoader:
     IMG_DIR = "assets/textures/"
     imgs_names = {
         "balan": "entities/balan.png",
+        "book": "items/book.png",
     }
     
     animations = {}

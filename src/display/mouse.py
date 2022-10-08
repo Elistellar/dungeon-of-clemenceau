@@ -6,6 +6,12 @@ class Mouse:
     Handle the mouse. 
     """
     
+    btns = [
+        False,
+        False,
+        False,
+    ]
+    
     @classmethod
     def disable(cls):
         """
@@ -37,6 +43,17 @@ class Mouse:
             btn (int): The mouse button to get, 0 for left, 1 for middle and 2 for right.
             
         Returns:
-            A boolean if the button requested is pressed.
+            A boolean if ther equested button is held.
         """
         return get_pressed()[btn]
+    
+    @classmethod
+    def get_click(cls, btn: int) -> bool:
+        """        
+        Parameters:
+            btn (int): The mouse button to get, 0 for left, 1 for middle and 2 for right.
+            
+        Returns:
+            A boolean if therequested button is clicked.
+        """
+        return cls.btns[btn]

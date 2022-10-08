@@ -1,4 +1,5 @@
 import logging as log
+from tkinter import E
 
 from pygame.event import get as get_events
 from pygame.locals import K_ESCAPE, KEYUP, MOUSEBUTTONUP, QUIT
@@ -15,6 +16,7 @@ from src.display.sprite_sheet import SpriteSheet
 from src.display.window import Window
 from src.entities.player import Player
 from src.lang import Lang
+from src.schedule import Schedule
 from src.settings import Settings
 from src.sound import Sound
 from src.utils.consts import FRAMERATE
@@ -70,6 +72,7 @@ class Game:
         
         cls.handle_events()
 
+        Schedule.update()
         UpdateGroup.update(dt)
         if EscapeMenu.is_open:
             EscapeMenu.update()
@@ -81,12 +84,17 @@ class Game:
     
     @classmethod
     def handle_events(cls):
+        Mouse.btns = [
+            False, False, False
+        ]
+        
         Component.keyup = None
         Component.left_click = False
         
         for event in get_events():
             
             if event.type == MOUSEBUTTONUP:
+                Mouse.btns[event.button-1] = True
                 if event.button == 1:
                     Component.left_click = True
                     
