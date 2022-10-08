@@ -20,7 +20,7 @@ def path(r_path: str, default_value: str = None) -> Path:
         abs_path /= d
     
     if not abs_path.exists():
-        if default_value:
+        if default_value is not None:
             # Create all directories leading to the path if they do not exist.
             for parent in abs_path.parents:
                 if not parent.exists():
