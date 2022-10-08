@@ -20,7 +20,7 @@ def init_logger(debug: bool):
         filename = datetime.now().strftime('%Y-%m-%d %Hh%M.log')
         
         handlers.append(
-            log.FileHandler(path('logs/' + filename, raise_on_not_found=False), encoding='utf-8')
+            log.FileHandler(path('logs/' + filename, default_value=""), encoding='utf-8')
         )
         
     log.basicConfig(
