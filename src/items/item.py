@@ -53,6 +53,7 @@ class Item(Sprite):
         Camera.add(self)
         UpdateGroup.add(self)
         self.visible = True
+        self.update_animation(0)
         
         if self.SHOW_DURATION is not None:
             Schedule.post(self.SHOW_DURATION, self.hide)
@@ -85,6 +86,9 @@ class Item(Sprite):
                 self.rect.right = self.owner.hitbox.left
                 
         # Image
+        self.update_animation(dt)
+    
+    def update_animation(self, dt: int):
         animation_name = self.get_animation_name()
         if animation_name != self.sprite_sheet.animation_name:
             self.sprite_sheet.change_animation(animation_name)
