@@ -1,12 +1,12 @@
 import logging as log
-from tkinter import E
 
 from pygame.event import get as get_events
-from pygame.locals import K_ESCAPE, KEYUP, MOUSEBUTTONUP, QUIT
+from pygame.locals import K_ESCAPE, K_F3, KEYUP, MOUSEBUTTONUP, QUIT
 from pygame.math import Vector2
 from pygame.time import Clock
 
 from src.display.camera import Camera
+from src.display.hud.debug import Debug
 from src.display.hud.menu.components.component import Component
 from src.display.hud.menu.escape import EscapeMenu
 from src.display.hud.menu.loader import load_menus
@@ -65,10 +65,12 @@ class Game:
         log.info("Loading menus")
         Component.init()
         load_menus()
+        Debug.init()
     
     @classmethod
     def mainloop(cls):
         dt = cls.clock.get_time()
+        Debug.Infos.fps = round(cls.clock.get_fps())
         
         cls.handle_events()
 
@@ -113,6 +115,10 @@ class Game:
                     else:
                         EscapeMenu.open()
                         cls.player.paused = True
+
+                elif event.key == K_F3:
+                    Debug.visible = not Debug.visible
+                
                 else:
                     Component.keyup = event.key
                     
@@ -131,6 +137,9 @@ class Game:
         
         if EscapeMenu.is_open:
             EscapeMenu.render()
+            
+        if Debug.visible:
+            Debug.render()
         
         Window.render()
     
