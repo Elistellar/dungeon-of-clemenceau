@@ -1,8 +1,8 @@
 from src.display.hud.menu.components.button import Button
 from src.display.hud.menu.components.slider import Slider
 from src.display.hud.menu.menu import Menu
-from src.settings import Settings
-from src.sound import Sound
+from src.settings.settings import Settings
+from src.sounds.sound import Sound
 
 
 class AudioMenu(Menu):

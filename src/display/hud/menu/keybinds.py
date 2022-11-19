@@ -1,7 +1,7 @@
 from src.display.hud.menu.components.button import Button
 from src.display.hud.menu.components.key_input import KeyInput
 from src.display.hud.menu.menu import Menu
-from src.settings import Settings
+from src.settings.settings import Settings
 
 
 class KeybindsMenu(Menu):

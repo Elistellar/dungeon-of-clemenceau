@@ -7,7 +7,7 @@ from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
 from src.utils.consts import TILE_SIZE, Orientation
 from src.world.groups import UpdateGroup
-from src.schedule import Schedule
+from src.utils.schedule import Schedule
 
 if TYPE_CHECKING:
     from src.entities.entity import Entity

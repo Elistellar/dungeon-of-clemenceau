@@ -2,7 +2,7 @@ import logging as log
 from enum import Enum
 from json import load as json_load
 
-from src.settings import Settings
+from src.settings.settings import Settings
 from src.utils.path import path
 
 

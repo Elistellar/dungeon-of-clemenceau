@@ -1,5 +1,5 @@
 from src.display.resource_loader import ResourceLoader
-from src.settings import Settings
+from src.settings.settings import Settings
 
 
 class Sound:

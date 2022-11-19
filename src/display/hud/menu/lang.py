@@ -1,7 +1,7 @@
 from src.display.hud.menu.components.button import Button
 from src.display.hud.menu.menu import Menu
 
-from src.lang import Lang
+from src.settings.lang import Lang
 
 
 class LangMenu(Menu):

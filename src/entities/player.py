@@ -3,9 +3,9 @@ from pygame.math import Vector2
 
 from src.entities.entity import Entity
 from src.items.container import Container
-from src.settings import Settings
+from src.settings.settings import Settings
 from src.items.book import Book
-from src.display.mouse import Mouse
+from src.events_controls.mouse import Mouse
 
 
 class Player(Entity):

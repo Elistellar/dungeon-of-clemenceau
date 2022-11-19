@@ -5,10 +5,10 @@ from pygame.draw import rect as draw_rect
 from pygame.key import name as get_key_name
 
 from src.display.hud.menu.components.component import Component
-from src.display.mouse import Mouse
+from src.events_controls.mouse import Mouse
 from src.display.window import Window
-from src.lang import Lang
-from src.sound import Sound
+from src.settings.lang import Lang
+from src.sounds.sound import Sound
 from src.utils.consts import COLOR_BTN_BG, COLOR_BTN_BG_HOVER, COLOR_BTN_TEXT
 
 
