@@ -10,22 +10,30 @@ from src.display.hud.debug import Debug
 from src.display.hud.menu.components.component import Component
 from src.display.hud.menu.escape import EscapeMenu
 from src.display.hud.menu.loader import load_menus
-from src.events_controls.mouse import Mouse
 from src.display.resource_loader import ResourceLoader
 from src.display.sprite_sheet import SpriteSheet
 from src.display.window import Window
-from src.entities.player import Player
+
+from src.events_controls.mouse import Mouse
+from src.events_controls.event_pipeline import EventQueue, SpecialEvent
+
+from src.actors.player import Player
+
+from src.data_storing.data_storage import DataStorage
+
 from src.settings.lang import Lang
-from src.utils.schedule import Schedule
 from src.settings.settings import Settings
-from src.sounds.sound import Sound
+
+from src.utils.schedule import Schedule
 from src.utils.consts import FRAMERATE
+
+from src.sounds.sound import Sound
+
 from src.world.generator import LevelGenerator
-from src.world.groups import UpdateGroup
 from src.world.tmx.loader import TmxLoader
 
 
-class Game:
+class GameEngine:
     """
     The main game class, where the loop stands.
     """
@@ -75,7 +83,7 @@ class Game:
         cls.handle_events()
 
         Schedule.update()
-        UpdateGroup.update(dt)
+        DataStorage.updateActors(dt)
         if EscapeMenu.is_open:
             EscapeMenu.update()
             
@@ -92,37 +100,30 @@ class Game:
         
         Component.keyup = None
         Component.left_click = False
-        
-        for event in get_events():
-            
-            if event.type == MOUSEBUTTONUP:
-                Mouse.btns[event.button-1] = True
-                if event.button == 1:
-                    Component.left_click = True
-                    
-            elif event.type == KEYUP:
-                if event.key == K_ESCAPE:
-                    if EscapeMenu.is_open:
-                        
-                        if Component.waiting_for_key:
-                            Component.waiting_for_key = False
-                            
-                        else:
-                            EscapeMenu.close()
-                            
-                            if not EscapeMenu.is_open:
-                                cls.player.paused = False
-                    else:
-                        EscapeMenu.open()
-                        cls.player.paused = True
 
-                elif event.key == K_F3:
-                    Debug.visible = not Debug.visible
-                
-                else:
-                    Component.keyup = event.key
+        to_consider = EventQueue.collect()
+        
+        for event in to_consider:
                     
-            elif event.type == QUIT:
+            if event == SpecialEvent.ESCAPE:
+                if EscapeMenu.is_open:
+                        
+                    if Component.waiting_for_key:
+                         Component.waiting_for_key = False
+                            
+                    else:
+                        EscapeMenu.close()
+                            
+                        if not EscapeMenu.is_open:
+                            cls.player.paused = False
+                else:
+                    EscapeMenu.open()
+                    cls.player.paused = True
+
+            elif event == SpecialEvent.DBG:
+                Debug.visible = not Debug.visible
+                    
+            elif event == SpecialEvent.EXIT:
                 cls.quit()
                 
         Component.mouse_pos = Mouse.get_pos()

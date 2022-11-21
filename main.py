@@ -20,9 +20,9 @@ if __name__ == "__main__":
 
     # Start game
     try:
-        from src.game import Game
+        from src.game import GameEngine
 
-        Game.start()
+        GameEngine.start()
     
     except SystemExit:
         pass

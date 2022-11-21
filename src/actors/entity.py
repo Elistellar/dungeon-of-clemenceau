@@ -1,29 +1,28 @@
 from pygame import Rect
 from pygame.math import Vector2
 from pygame.sprite import Sprite
+from enum import Enum
 
 from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
 from src.utils.consts import TILE_SIZE, Orientation
-from src.world.groups import UpdateGroup
-from src.world.physics import Physics
+from src.physics.body import Body
+from src.physics.physics_engine import PhysicsEngine
+from src.data_storing.data_storage import DataStorage
+from src.commanding.command_node import CommandNode
 
 
-class Entity(Sprite):
+class Entity(Sprite, Body):
     """
     A base class for all entities.
     """
     
-    CENTER_POS = Vector2(TILE_SIZE) / 2
-    
     # to overwite
     SPRITE_SHEET_NAME: str
-    
-    HITBOX = 0, 0
-    
-    class speeds:
-        WALK = 0.15
-        SPRINT = 0.25
+
+    class Kind(Enum):
+        Abstract = 0
+        Player = 1
     
     class states:
         IDLEING   = "idle"
@@ -32,14 +31,12 @@ class Entity(Sprite):
         ATTACKING = "attack"
     
     def __init__(self, pos: Vector2):
-        super().__init__(Camera, UpdateGroup)
+        Sprite.__init__(self, Camera, DataStorage.entities)
+        Body.__init__(self, pos)
         
-        self.pos = pos + self.CENTER_POS
+        
         self.direction = Vector2()
-        self.speed = self.speeds.WALK
-        
-        self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
-        self.hitbox = self.rect.inflate(self.HITBOX)
+        self.brain = CommandNode()
             
         self.state = self.states.IDLEING
         self.orientation = Orientation.SOUTH
@@ -59,6 +56,8 @@ class Entity(Sprite):
         - The animation
         - The position
         """
+        
+        self.direction = self.brain.getDirection()
         
         # State
         if self.direction.magnitude() == 0:
@@ -88,15 +87,6 @@ class Entity(Sprite):
         self.image = self.sprite_sheet.get_surface()
         
         # Position
-        if self.direction.magnitude() != 0:
-            self.direction = self.direction.normalize()
-        
-        self.pos.x += self.direction.x * dt * self.speed
-        self.hitbox.x = self.pos.x
-        Physics.collide_x(self)
-        
-        self.pos.y += self.direction.y * dt * self.speed
-        self.hitbox.y = self.pos.y
-        Physics.collide_y(self)
-        
+        PhysicsEngine.clip(self.direction, self.hitbox)
+        self.hitbox.move(self.direction.x, self.direction.y)
         self.rect.center = self.hitbox.center 
