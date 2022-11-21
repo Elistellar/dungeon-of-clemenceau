@@ -1,7 +1,8 @@
 from pygame import Rect
-from pygame import Vector2
+from pygame.math import Vector2
 
 from src.utils.consts import TILE_SIZE
+
 
 class Body:
     """
@@ -15,7 +16,7 @@ class Body:
     
     HITBOX = 0, 0
 
-    def __init__(self, pos):
-        self.pos = pos + self.CENTER_POS
-        self.rect = Rect(*self.pos, TILE_SIZE, TILE_SIZE)
+    def __init__(self, rect: Rect):
+        self.pos = rect.center + self.CENTER_POS
+        self.rect = rect
         self.hitbox = self.rect.inflate(self.HITBOX)

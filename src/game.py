@@ -1,10 +1,10 @@
 import logging as log
 
-from pygame.event import get as get_events
-from pygame.locals import K_ESCAPE, K_F3, KEYUP, MOUSEBUTTONUP, QUIT
 from pygame.math import Vector2
 from pygame.time import Clock
 
+from src.actors.player import Player
+from src.data_storing.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.hud.debug import Debug
 from src.display.hud.menu.components.component import Component
@@ -13,22 +13,13 @@ from src.display.hud.menu.loader import load_menus
 from src.display.resource_loader import ResourceLoader
 from src.display.sprite_sheet import SpriteSheet
 from src.display.window import Window
-
-from src.events_controls.mouse import Mouse
 from src.events_controls.event_pipeline import EventQueue, SpecialEvent
-
-from src.actors.player import Player
-
-from src.data_storing.data_storage import DataStorage
-
+from src.events_controls.mouse import Mouse
 from src.settings.lang import Lang
 from src.settings.settings import Settings
-
-from src.utils.schedule import Schedule
-from src.utils.consts import FRAMERATE
-
 from src.sounds.sound import Sound
-
+from src.utils.consts import FRAMERATE
+from src.utils.schedule import Schedule
 from src.world.generator import LevelGenerator
 from src.world.tmx.loader import TmxLoader
 

@@ -5,10 +5,10 @@ from pygame import Vector2
 from src.display.camera import Camera
 from src.world.tmx.loader import TmxLoader
 from src.world.tmx.tile import Tile
-from src.world.groups import Obstacles
+from src.data_storing.data_storage import DataStorage
 
 if TYPE_CHECKING:
-    from src.entities.player import Player
+    from src.actors.player import Player
 
 
 class LevelGenerator:
@@ -19,15 +19,15 @@ class LevelGenerator:
         Clear the current level and generate another one.
         """
         Camera.empty()
-        Obstacles.empty()
+        DataStorage.obstacles.empty()
         
         room = TmxLoader.rooms[0]
         
         floor = Tile(Vector2(), room.floor.surface)
         Camera.background.add(floor)
-        Obstacles.add(room.obstacles)
+        DataStorage.obstacles.add(room.obstacles)
         
         Camera.add(room.relief.tiles)
-        Obstacles.add(room.obstacles)
+        DataStorage.obstacles.add(room.obstacles)
         
         Camera.add(player)

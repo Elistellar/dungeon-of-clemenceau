@@ -1,11 +1,10 @@
-
+from pygame.locals import KEYDOWN, KEYUP
 from pygame.math import Vector2
-from pygame.event import Event
-from pygame.event import KEYDOWN, KEYUP
 
 from src.commanding.command_node import CommandNode
 from src.events_controls.event_pipeline import EventQueue
 from src.settings.settings import Settings
+
 
 class PlayerNode(CommandNode):
     """

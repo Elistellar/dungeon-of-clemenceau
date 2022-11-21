@@ -1,15 +1,16 @@
+from enum import Enum
+
 from pygame import Rect
 from pygame.math import Vector2
 from pygame.sprite import Sprite
-from enum import Enum
 
+from src.commanding.command_node import CommandNode
+from src.data_storing.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
-from src.utils.consts import TILE_SIZE, Orientation
 from src.physics.body import Body
 from src.physics.physics_engine import PhysicsEngine
-from src.data_storing.data_storage import DataStorage
-from src.commanding.command_node import CommandNode
+from src.utils.consts import TILE_SIZE, Orientation
 
 
 class Entity(Sprite, Body):
@@ -32,8 +33,7 @@ class Entity(Sprite, Body):
     
     def __init__(self, pos: Vector2):
         Sprite.__init__(self, Camera, DataStorage.entities)
-        Body.__init__(self, pos)
-        
+        Body.__init__(self, Rect(*pos, TILE_SIZE, TILE_SIZE))
         
         self.direction = Vector2()
         self.brain = CommandNode()

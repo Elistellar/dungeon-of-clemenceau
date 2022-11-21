@@ -1,14 +1,11 @@
-from pygame.event import Event
-from pygame.event import poll
-from pygame.event import get as get_events
-from pygame.locals import K_ESCAPE, K_F3, KEYUP, KEYDOWN, MOUSEBUTTONUP, QUIT
 from enum import Enum
 
-from src.game import GameEngine
-from src.events_controls.mouse import Mouse
+from pygame.event import get as get_events
+from pygame.event import poll
+from pygame.locals import K_ESCAPE, K_F3, KEYDOWN, KEYUP, MOUSEBUTTONUP, QUIT
+
 from src.display.hud.menu.components.component import Component
-from src.display.hud.menu.escape import EscapeMenu
-from src.display.hud.debug import Debug
+from src.events_controls.mouse import Mouse
 
 
 class SpecialEvent(Enum):
@@ -16,23 +13,27 @@ class SpecialEvent(Enum):
     ESCAPE=1
     DBG=2
 
+
 class EventQueue:
     """
     Class handeling incomming events from user.
     """
 
+    @classmethod
     def popEvent(cls):
         """
         returns first event
         """
         return cls.queue.pop(0)
 
+    @classmethod
     def empty(cls)->bool:
         """
         Indicates wether there is still events in the queue or not
         """
         return cls.queue == []
 
+    @classmethod
     def collect(cls):
         """
         Collects all events of the frame and pre-processes it

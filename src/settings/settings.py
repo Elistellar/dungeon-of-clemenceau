@@ -12,7 +12,7 @@ class Settings:
     
     @classmethod
     def load(cls):
-        with open(path("src/settings/config.json"), encoding="utf-8") as file:
+        with open(path("config.json"), encoding="utf-8") as file:
             cls.data = json_load(file)
             
     def __class_getitem__(cls, key: str):
@@ -25,7 +25,7 @@ class Settings:
         """
         cls.data[key] = value
         
-        with open(path("src/settings/config.json"), "w", encoding="utf-8") as file:
+        with open(path("config.json"), "w", encoding="utf-8") as file:
             json_dump(cls.data, file, indent=4)
             
         return value

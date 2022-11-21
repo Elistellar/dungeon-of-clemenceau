@@ -6,11 +6,11 @@ from pygame.sprite import Sprite
 from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
 from src.utils.consts import TILE_SIZE, Orientation
-from src.world.groups import UpdateGroup
+from src.data_storing.data_storage import DataStorage
 from src.utils.schedule import Schedule
 
 if TYPE_CHECKING:
-    from src.entities.entity import Entity
+    from src.actors.entity import Entity
 
 
 class Item(Sprite):
@@ -51,7 +51,7 @@ class Item(Sprite):
             self.rect.center = pos
             
         Camera.add(self)
-        UpdateGroup.add(self)
+        DataStorage.update.add(self)
         self.visible = True
         self.update_animation(0)
         
@@ -60,7 +60,7 @@ class Item(Sprite):
         
     def hide(self):
         Camera.remove(self)
-        UpdateGroup.remove(self)
+        DataStorage.update.remove(self)
         self.visible = False
         
     def update(self, dt: int):

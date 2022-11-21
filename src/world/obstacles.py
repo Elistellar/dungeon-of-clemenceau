@@ -1,16 +1,17 @@
-from pygame.math import Vector2
+from pygame import Rect
 from pygame.sprite import Sprite
+
 from src.physics.body import Body
 
 
-class Obstacle(Sprite):
+class Obstacle(Sprite, Body):
     """
     A sprite that only have an hitbox.
     """
     
-    def __init__(self, pos: Vector2):
+    def __init__(self, rect: Rect):
         """
         Create a new obstacle.
         """
         Sprite.__init__(self)
-        Body.__init__(self, pos)
+        Body.__init__(self, rect)

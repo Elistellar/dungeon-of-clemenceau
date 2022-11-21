@@ -1,11 +1,10 @@
 from pygame.math import Vector2
 
 from src.actors.entity import Entity
-from src.items.container import Container
-from src.settings.settings import Settings
-from src.items.book import Book
 from src.commanding.player_node import PlayerNode
 from src.events_controls.mouse import Mouse
+from src.items.book import Book
+from src.items.container import Container
 
 
 class Player(Entity):
@@ -35,5 +34,3 @@ class Player(Entity):
             #others
             if Mouse.get_click(0):
                 self.inventory.items[0].show(2)
-                    
-        
