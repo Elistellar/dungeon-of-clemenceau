@@ -10,7 +10,7 @@ from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
 from src.physics.body import Body
 from src.physics.physics_engine import PhysicsEngine
-from src.utils.consts import TILE_SIZE, Orientation
+from src.utils.consts import TILE_SIZE, Orientation, CONSTRAIN_DECREASE
 
 
 class Entity(Sprite, Body):
@@ -32,10 +32,11 @@ class Entity(Sprite, Body):
         ATTACKING = "attack"
     
     def __init__(self, pos: Vector2):
-        Sprite.__init__(self, Camera, DataStorage.entities)
+        Sprite.__init__(self, Camera, DataStorage.update)
         Body.__init__(self, Rect(*pos, TILE_SIZE, TILE_SIZE))
         
-        self.direction = Vector2()
+        self.direction = Vector2() #the last movement of the entity
+        self.constrain = Vector2(0,0) #represents a vector imposed by the exterior to the entity (decreaces over time)
         self.brain = CommandNode()
             
         self.state = self.states.IDLEING
@@ -60,11 +61,12 @@ class Entity(Sprite, Body):
         self.direction = self.brain.getDirection()
         
         # State
-        if self.direction.magnitude() == 0:
+        speed = self.direction.magnitude()
+        if speed == 0:
             self.state = self.states.IDLEING
-        elif self.speed == self.speeds.WALK:
+        elif speed <= CommandNode.speeds.WALK:
             self.state = self.states.WALKING
-        elif self.speed == self.speeds.SPRINT:
+        else:
             self.state = self.states.SPRINTING
             
         # Orientation
@@ -86,7 +88,14 @@ class Entity(Sprite, Body):
         self.sprite_sheet.update(dt)
         self.image = self.sprite_sheet.get_surface()
         
-        # Position
+        # Position and vectors
+        self.direction += self.constrain
+        self.direction*=dt
+        if self.constrain.magnitude() < CONSTRAIN_DECREASE:
+            self.constrain = Vector2()
+        else:
+            self.constrain += self.constrain.normalize()*CONSTRAIN_DECREASE
+
         PhysicsEngine.clip(self.direction, self.hitbox)
-        self.hitbox.move(self.direction.x, self.direction.y)
+        self.hitbox.move_ip(self.direction.x, self.direction.y)
         self.rect.center = self.hitbox.center 

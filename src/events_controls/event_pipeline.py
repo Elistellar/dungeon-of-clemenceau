@@ -41,7 +41,6 @@ class EventQueue:
         """
         special_ones = []
         cls.queue = []
-        currentEvent = poll()
         for event in get_events():
             
             if event.type == MOUSEBUTTONUP:
@@ -57,11 +56,8 @@ class EventQueue:
                     special_ones.append(SpecialEvent.DBG)
                 
                 else:
-                    cls.queue.append(currentEvent)
                     Component.keyup = event.key
 
-            elif event.type == KEYDOWN:
-                cls.queue.append(currentEvent)
 
             elif event.type == QUIT:
                special_ones.append(SpecialEvent.EXIT)

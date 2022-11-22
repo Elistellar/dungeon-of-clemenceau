@@ -5,7 +5,7 @@ from src.items.item import Item
 
 class Container:
     
-    items: List[Item, None]
+    items: List[Item | None]
     
     def __init__(self, _len: int):
         self.items = [None for _ in range(_len)]
