@@ -2,12 +2,13 @@ from collections import deque
 
 from pygame.event import get as pygame_event
 from pygame.key import get_pressed as get_keys_pressed
-from pygame.locals import K_F3, K_F11, KEYUP
+from pygame.locals import K_ESCAPE, K_F3, K_F11, KEYUP, MOUSEBUTTONUP
 from pygame.locals import QUIT as P_QUIT
 from pygame.math import Vector2
+from pygame.mouse import get_pos as get_mouse_pos
 
 from src.events.event import Event
-from src.events.types import DEBUG, FULLSCREEN, QUIT
+from src.events.types import DEBUG, FULLSCREEN, MENU_BACK, QUIT
 from src.settings.settings import Settings
 
 
@@ -22,15 +23,21 @@ class EventQueueMeta(type):
         except IndexError:
             raise StopIteration()
 
+
 class EventQueue(metaclass=EventQueueMeta):
     
     __queue = deque()
+    
+    click: bool
+    cursor: Vector2
     
     __player_direction = Vector2()
     player_is_sprinting: bool
     
     @classmethod
     def update(cls):
+        cls.click = False
+        
         for event in pygame_event():
             t = event.type
             
@@ -40,10 +47,16 @@ class EventQueue(metaclass=EventQueueMeta):
             elif t == KEYUP:                
                 if event.key == K_F11:
                     cls.post(Event(FULLSCREEN))
-                if event.key == K_F3:
+                elif event.key == K_F3:
                     cls.post(Event(DEBUG))
+                elif event.key == K_ESCAPE:
+                    cls.post(Event(MENU_BACK))
+            
+            elif t == MOUSEBUTTONUP:
+                cls.click = True
                     
         keys = get_keys_pressed()
+        cls.cursor = Vector2(get_mouse_pos())
         
         cls.__player_direction = Vector2()
         if keys[Settings["key.move_forward"]]:

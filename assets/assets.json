@@ -1,6 +1,14 @@
 {
     "texture": {
-        "balan_tmp": "entities/balan_tmp.png"
+        "balan_tmp": "entities/balan_tmp.png",
+        "menu.small_button": "hud/small_button.png",
+        "menu.large_button": "hud/large_button.png",
+        "menu.small_button_hovered": "hud/hovered_small_button.png",
+        "menu.large_button_hovered": "hud/hovered_large_button.png",
+        "icon.achievement": "hud/achievement_icon.png",
+        "icon.about": "hud/about_icon.png",
+        "icon.language": "hud/language_icon.png",
+        "favicon": "favicon.png"
     },
     "spritesheet": {
     },

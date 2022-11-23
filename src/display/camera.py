@@ -28,7 +28,6 @@ class _Camera(Group):
         self.offset = Vector2(center.rect.center) - self.screen_center
         
         for sprite in self.background.sprites() + sorted(self.sprites(), key=lambda s: s.rect.centery):
-                        
             blit(
                 sprite.image,
                 sprite.rect.topleft - self.offset
