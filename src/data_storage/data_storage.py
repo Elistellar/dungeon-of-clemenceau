@@ -5,6 +5,7 @@ class DataStorage(Group):
 
     obstacles = Group()
     update = Group()
+    entities = Group()
         
     @classmethod
     def updateActors(cls, dt):
