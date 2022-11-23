@@ -9,12 +9,8 @@ from src.data_storage.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
 from src.physics.body import Body
-<<<<<<< HEAD
-from src.utils.consts import TILE_SIZE, Orientation
-=======
 from src.physics.physics_engine import PhysicsEngine
 from src.utils.consts import TILE_SIZE, Orientation, CONSTRAIN_DECREASE
->>>>>>> aaf7906836a6824d947e0a1d85a7376671ca49d1
 
 
 class Entity(Sprite, Body):

@@ -1,7 +1,7 @@
 from pygame import Rect
 from pygame.math import Vector2
 
-from src.data_storing.data_storage import DataStorage
+from src.data_storage.data_storage import DataStorage
 
 
 class PhysicsEngine:
