@@ -1,0 +1,3 @@
+QUIT = 0
+FULLSCREEN = 1
+DEBUG = 2

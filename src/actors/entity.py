@@ -5,11 +5,10 @@ from pygame.math import Vector2
 from pygame.sprite import Sprite
 
 from src.commanding.command_node import CommandNode
-from src.data_storing.data_storage import DataStorage
+from src.data_storage.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.sprite_sheet import SpriteSheet
 from src.physics.body import Body
-from src.physics.physics_engine import PhysicsEngine
 from src.utils.consts import TILE_SIZE, Orientation
 
 
@@ -37,6 +36,7 @@ class Entity(Sprite, Body):
         
         self.direction = Vector2()
         self.brain = CommandNode()
+        self.speed = self.speeds.WALK
             
         self.state = self.states.IDLEING
         self.orientation = Orientation.SOUTH
@@ -57,7 +57,7 @@ class Entity(Sprite, Body):
         - The position
         """
         
-        self.direction = self.brain.getDirection()
+        self.direction = self.brain.get_direction()
         
         # State
         if self.direction.magnitude() == 0:
@@ -87,6 +87,7 @@ class Entity(Sprite, Body):
         self.image = self.sprite_sheet.get_surface()
         
         # Position
-        PhysicsEngine.clip(self.direction, self.hitbox)
-        self.hitbox.move(self.direction.x, self.direction.y)
-        self.rect.center = self.hitbox.center 
+        # PhysicsEngine.clip(self.direction, self.hitbox)
+        self.hitbox.x += self.direction.x * dt * self.speed
+        self.hitbox.y += self.direction.y * dt * self.speed
+        self.rect.center = self.hitbox.center

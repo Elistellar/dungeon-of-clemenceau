@@ -1,4 +1,5 @@
-from xml.etree.ElementTree import parse as XMLparse
+from xml.etree.ElementTree import Element as XMLElement
+from typing import Callable
 from pathlib import Path
 
 from pygame import Rect
@@ -9,17 +10,18 @@ from src.world.tmx.tileset import Tileset
 from src.world.obstacles import Obstacle
 
 
-class Map:
+class Region:
     """
     Represent a tmx map.
     """
     
-    def __init__(self, file_path: Path):
+    def __init__(self, root: XMLElement, file_location: Path, get_tileset: Callable[[Path], Tileset]):
         """
         Load the given tmx map.
+        
+        Raises:
+            - ValueError if the file does not fit to the requiered properties
         """
-        tree = XMLparse(file_path)
-        root = tree.getroot()
         
         # Integrity check
         attribs = root.attrib
@@ -29,11 +31,11 @@ class Map:
         or attribs.get("tileheight")  != str(TILE_SIZE) \
         or attribs.get("width")       != str(ROOM_SIZE) \
         or attribs.get("height")      != str(ROOM_SIZE):
-            raise AttributeError(f"Corrupted file {file_path}")
+            raise ValueError()
         
         # Load tileset
-        tileset_path = root.find("tileset").attrib["source"]
-        tileset = Tileset.load(file_path, tileset_path)
+        tileset_path = root.find("tileset").attrib["source"]        
+        tileset = get_tileset(file_location / tileset_path)
         
         # Load layers
         for layer_element in root.findall("layer"):

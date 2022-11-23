@@ -1,4 +1,4 @@
-from src.display.resource_loader import ResourceLoader
+from src.display.resource import Resource
 from src.display.window import Window
 from src.utils.consts import COLOR_BTN_TEXT
 
@@ -11,7 +11,7 @@ class Debug:
     @classmethod
     def init(cls):
         cls.visible = False
-        cls._font = ResourceLoader["font.main24"]
+        cls._font = Resource.fnt("main24")
 
     @classmethod
     def render(cls):

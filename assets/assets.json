@@ -1,0 +1,18 @@
+{
+    "texture": {
+        "balan_tmp": "entities/balan_tmp.png"
+    },
+    "spritesheet": {
+    },
+    "sounds": {
+    },
+    "fonts": {
+        "main24": {
+            "file": "main.ttf",
+            "size": 24
+        }
+    },
+    "tmx": {
+        "1": "rooms/1.tmx"
+    }
+}

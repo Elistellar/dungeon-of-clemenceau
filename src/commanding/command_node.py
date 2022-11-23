@@ -13,5 +13,5 @@ class CommandNode:
     def __init__(self):
         pass
 
-    def getDirection()->Vector2:
+    def get_direction() -> Vector2:
         return Vector2()
