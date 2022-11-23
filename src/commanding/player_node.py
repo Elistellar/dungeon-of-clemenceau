@@ -1,8 +1,11 @@
-from pygame.locals import KEYDOWN, KEYUP
+from pygame.key import get_pressed
 from pygame.math import Vector2
 
 from src.commanding.command_node import CommandNode
+<<<<<<< HEAD
 from src.events.queue import EventQueue as Events
+=======
+>>>>>>> aaf7906836a6824d947e0a1d85a7376671ca49d1
 from src.settings.settings import Settings
 
 
