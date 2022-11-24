@@ -11,8 +11,8 @@ from src.utils.consts import COLOR_BUTTON_TEXT
 
 class LargeButton(Button):
     
-    WIDTH = 64
-    HEIGHT = 16
+    WIDTH = 256
+    HEIGHT = 64
     
     @classmethod
     def init(cls):
@@ -21,7 +21,7 @@ class LargeButton(Button):
         cls.FONT = Resource.fnt("main24")
     
     def __init__(self, pos: Tuple[int, int], text: str, on_click: Callable[[None], None], *args):
-        super().__init__(Rect(*pos, self.WIDTH, self.HEIGHT), on_click, args)
+        super().__init__(Rect(*pos, self.WIDTH, self.HEIGHT), on_click, *args)
         
         self.text = text
         

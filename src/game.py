@@ -13,7 +13,7 @@ from src.display.hud.menu.components.large_button import LargeButton
 from src.display.hud.menu.components.small_button import SmallButton
 from src.display.hud.menu.escape import EscapeMenu
 from src.display.hud.menu.language import LanguageMenu
-from src.display.hud.menu.options import OptionsMenu
+from src.display.hud.menu.settings import SettingsMenu
 from src.display.resource import Resource
 from src.display.window import Window
 from src.events.queue import EventQueue
@@ -46,7 +46,7 @@ class GameEngine:
         
         EscapeMenu.init()
         AchievementsMenu.init()
-        OptionsMenu.init()
+        SettingsMenu.init()
         LanguageMenu.init()
         
         cls.player = Player(Vector2())

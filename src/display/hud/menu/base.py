@@ -5,12 +5,14 @@ from typing import Tuple
 from src.display.hud.menu.components.component import Component
 from src.utils.consts import Orientation
 from src.events.queue import EventQueue as Events
+from src.events.event import Event
+from src.events.types import MENU_BACK
 
 
 class BaseMenu:
     
-    components: Tuple[Tuple[Component]]
-    submenus: dict[str, "BaseMenu"]
+    components: Tuple[Tuple[Component]] = tuple()
+    submenus: dict[str, "BaseMenu"] = {}
     submenu: "BaseMenu" = None
     opened = False
     cursor: Tuple[int, int] = (None, None)
@@ -24,6 +26,10 @@ class BaseMenu:
             
         else:
             cls.opened = False
+    
+    @classmethod
+    def back(cls):
+        Events.post(Event(MENU_BACK))
     
     @classmethod
     def open(cls):
@@ -60,7 +66,8 @@ class BaseMenu:
         else:
             for row in cls.components:
                 for component in row:
-                    component.render()
+                    if component:
+                        component.render()
 
     @classmethod
     def select_component(cls, direction: Orientation):

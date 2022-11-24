@@ -8,6 +8,8 @@
         "icon.achievement": "hud/achievement_icon.png",
         "icon.about": "hud/about_icon.png",
         "icon.language": "hud/language_icon.png",
+        "icon.fr": "hud/fr_icon.png",
+        "icon.en": "hud/en_icon.png",
         "favicon": "favicon.png"
     },
     "spritesheet": {

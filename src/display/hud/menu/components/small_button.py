@@ -9,8 +9,8 @@ from src.display.window import Window
 
 class SmallButton(Button):
     
-    WIDTH = 16
-    HEIGHT = 16
+    WIDTH = 64
+    HEIGHT = 64
     
     @classmethod
     def init(cls):
@@ -18,7 +18,7 @@ class SmallButton(Button):
         cls.SURFACE_HOVERED = Resource.img("menu.small_button_hovered")
     
     def __init__(self, pos: Tuple[int, int], icon_name: str, on_click: Callable[[None], None], *args):
-        super().__init__(Rect(*pos, self.WIDTH, self.HEIGHT), on_click, args)
+        super().__init__(Rect(*pos, self.WIDTH, self.HEIGHT), on_click, *args)
         
         self.icon_surface = Resource.img("icon." + icon_name)
         
