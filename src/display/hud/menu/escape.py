@@ -22,8 +22,8 @@ class EscapeMenu(BaseMenu):
     @classmethod
     def init(cls):
         cls.components = (
-            (LargeButton((474, 252), "menu.quit", quit), SmallButton((742, 252), "achievement", cls.open_sub, "achievements")),
-            (SmallButton((474, 328), "about", cls.about), LargeButton((550, 328), "menu.settings", cls.open_sub, "settings")),
+            (LargeButton((474, 252), "menu.quit", cls.quit),     SmallButton((742, 252), "achievement", cls.open_sub, "achievements")),
+            (SmallButton((474, 328), "about", cls.about),        LargeButton((550, 328), "menu.settings", cls.open_sub, "settings")),
             (LargeButton((474, 404), "menu.resume", cls.escape), SmallButton((742, 404), "language", cls.open_sub, "language")),
         )
         

@@ -1,12 +1,10 @@
 {
     "menu.quit": "Quit",
     "menu.resume": "Resume",
-    "menu.about": "About",
     "menu.settings": "Settings",
     "menu.keybinds": "Keybinds",
-    "menu.audio": "Audio",
-    "menu.lang": "Lang",
     "menu.back": "Back",
+    "menu.display": "Graphics",
     "menu.audio.entity": "Entities",
     "menu.audio.menu": "Menus",
     "menu.audio.music": "Musics",

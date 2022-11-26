@@ -1,7 +1,7 @@
 from enum import Enum
 
 from pygame import Surface
-from pygame.display import flip, set_caption
+from pygame.display import flip, set_caption, set_icon
 from pygame.display import set_mode as open_window
 from pygame.display import toggle_fullscreen
 from pygame.locals import SRCALPHA
@@ -30,6 +30,10 @@ class Window:
     @classmethod
     def set_title(cls, title: str):
         set_caption(title)
+        
+    @classmethod
+    def set_icon(cls, icon: Surface):
+        set_icon(icon)
         
     @classmethod
     def resize(cls, size: Size):

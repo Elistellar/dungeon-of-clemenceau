@@ -2,7 +2,7 @@ from src.display.hud.menu.base import BaseMenu
 from src.display.hud.menu.components.large_button import LargeButton
 
 
-class AchievementsMenu(BaseMenu):
+class ControllerMenu(BaseMenu):
     
     @classmethod
     def init(cls):

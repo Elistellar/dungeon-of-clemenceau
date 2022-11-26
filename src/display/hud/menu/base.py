@@ -2,21 +2,28 @@ from __future__ import annotations
 
 from typing import Tuple
 
+from pygame import Surface
+from pygame.locals import SRCALPHA
+
 from src.display.hud.menu.components.component import Component
-from src.utils.consts import Orientation
-from src.events.queue import EventQueue as Events
+from src.display.window import Window
 from src.events.event import Event
+from src.events.queue import EventQueue as Events
 from src.events.types import MENU_BACK
+from src.utils.consts import COLOR_MENU_BACKGROUND, Orientation
 
 
 class BaseMenu:
+    
+    BLACK_SURFACE = Surface(Window.Size.FULL_HD.value, SRCALPHA)
+    BLACK_SURFACE.fill(COLOR_MENU_BACKGROUND)
     
     components: Tuple[Tuple[Component]] = tuple()
     submenus: dict[str, "BaseMenu"] = {}
     submenu: "BaseMenu" = None
     opened = False
     cursor: Tuple[int, int] = (None, None)
-    
+
     @classmethod
     def escape(cls):
         if cls.submenu:
@@ -64,6 +71,11 @@ class BaseMenu:
         if cls.submenu:
             cls.submenu.render()
         else:
+            Window.hud_surface.blit(
+                cls.BLACK_SURFACE,
+                (0, 0)
+            )
+            
             for row in cls.components:
                 for component in row:
                     if component:

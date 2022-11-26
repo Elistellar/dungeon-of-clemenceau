@@ -11,9 +11,13 @@ from src.display.hud.debug import Debug
 from src.display.hud.menu.achievements import AchievementsMenu
 from src.display.hud.menu.components.large_button import LargeButton
 from src.display.hud.menu.components.small_button import SmallButton
+from src.display.hud.menu.controller import ControllerMenu
+from src.display.hud.menu.display import DisplayMenu
 from src.display.hud.menu.escape import EscapeMenu
+from src.display.hud.menu.keybinds import KeybindsMenu
 from src.display.hud.menu.language import LanguageMenu
 from src.display.hud.menu.settings import SettingsMenu
+from src.display.hud.menu.sound import SoundMenu
 from src.display.resource import Resource
 from src.display.window import Window
 from src.events.queue import EventQueue
@@ -32,6 +36,7 @@ class GameEngine:
         Window.init(Window.Size.HD, Window.Size.HD)
         Window.set_title("Dungeon of Clemenceau")
         Resource.load()
+        Window.set_icon(Resource.img("favicon"))
         
         log.info("Loading settings")
         Settings.load()
@@ -44,10 +49,15 @@ class GameEngine:
         SmallButton.init()
         LargeButton.init()
         
+        EscapeMenu.quit = cls.quit
         EscapeMenu.init()
         AchievementsMenu.init()
         SettingsMenu.init()
         LanguageMenu.init()
+        ControllerMenu.init()
+        KeybindsMenu.init()
+        SoundMenu.init()
+        DisplayMenu.init()
         
         cls.player = Player(Vector2())
         cls.load_level(1)
@@ -119,4 +129,5 @@ class GameEngine:
     
     @classmethod
     def quit(cls) -> NoReturn:
+        log.info("Bye !")
         exit(0)
