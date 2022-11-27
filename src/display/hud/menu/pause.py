@@ -9,7 +9,7 @@ from src.display.hud.menu.settings import SettingsMenu
 from src.display.hud.menu.language import LanguageMenu
 
 
-class EscapeMenu(BaseMenu):
+class PauseMenu(BaseMenu):
     
     quit: Callable[[None], NoReturn] 
     

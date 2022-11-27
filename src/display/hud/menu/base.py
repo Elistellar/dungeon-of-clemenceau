@@ -4,6 +4,7 @@ from typing import Tuple
 
 from pygame import Surface
 from pygame.locals import SRCALPHA
+from pygame.math import Vector2
 
 from src.display.hud.menu.components.component import Component
 from src.display.window import Window
@@ -11,7 +12,7 @@ from src.events.event import Event
 from src.events.queue import EventQueue as Events
 from src.events.types import MENU_BACK
 from src.sounds.sound import Sound
-from src.utils.consts import COLOR_MENU_BACKGROUND, Orientation
+from src.utils.consts import COLOR_MENU_BACKGROUND
 
 
 class BaseMenu:
@@ -23,7 +24,7 @@ class BaseMenu:
     submenus: dict[str, "BaseMenu"] = {}
     submenu: "BaseMenu" = None
     opened = False
-    cursor: Tuple[int, int] = (None, None)
+    cursor: Vector2
 
     @classmethod
     def escape(cls):
@@ -48,6 +49,7 @@ class BaseMenu:
     
     @classmethod
     def open(cls):
+        cls.cursor = Vector2()
         cls.opened = True
         
     @classmethod
@@ -66,13 +68,14 @@ class BaseMenu:
                     if component is None: continue
                     
                     if not Events.listening:
-                        if component.rect.collidepoint(Events.cursor):
+                        if component.rect.collidepoint(Events.cursor) or cls.cursor == Vector2(x, y):
                             if not component.is_hovered:
                                 Sound.play("button.hover", "menu")
                             component.is_hovered = True
-                            cls.cursor = x, y
+                            cls.cursor.x = x
+                            cls.cursor.y = y
                             
-                        if cls.cursor != (x, y):
+                        if cls.cursor != Vector2(x, y):
                             component.is_hovered = False
                         
                     component.update(dt)
@@ -93,19 +96,22 @@ class BaseMenu:
                         component.render()
 
     @classmethod
-    def select_component(cls, direction: Orientation):
-        if direction == Orientation.NORTH:
-            if cls.cursor.y > 0:
-                cls.cursor -= 1
-                
-        elif direction == Orientation.WEST:
-            if cls.cursor.x > 0:
-                cls.cursor.x -= 1
-                
-        elif direction == Orientation.SOUTH:
-            if cls.cursor.y < len(cls.components) - 1:
-                cls.cursor.y += 1
-                
-        elif direction == Orientation.EAST:
-            if cls.cursor.x < len(cls.components[0]) - 1:
-                cls.cursor.x += 1
+    def select_component(cls, x: int, y: int):
+        if cls.submenu:
+            cls.submenu.select_component(x, y)
+        else:
+            if y == -1:
+                if cls.cursor.y > 0:
+                    cls.cursor.y -= 1
+                    
+            elif x == -1:
+                if cls.cursor.x > 0:
+                    cls.cursor.x -= 1
+                    
+            elif y == 1:
+                if cls.cursor.y < len(cls.components) - 1:
+                    cls.cursor.y += 1
+                    
+            elif x == 1:
+                if cls.cursor.x < len(cls.components[0]) - 1:
+                    cls.cursor.x += 1

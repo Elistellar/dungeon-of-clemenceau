@@ -13,20 +13,21 @@ from src.display.hud.menu.achievements import AchievementsMenu
 from src.display.hud.menu.components.component import Component
 from src.display.hud.menu.controller import ControllerMenu
 from src.display.hud.menu.display import DisplayMenu
-from src.display.hud.menu.escape import EscapeMenu
 from src.display.hud.menu.keybinds import KeybindsMenu
 from src.display.hud.menu.language import LanguageMenu
+from src.display.hud.menu.pause import PauseMenu
 from src.display.hud.menu.settings import SettingsMenu
 from src.display.hud.menu.sound import SoundMenu
 from src.display.resource import Resource
 from src.display.window import Window
 from src.events.queue import EventQueue
-from src.events.types import DEBUG, FULLSCREEN, MENU_BACK, QUIT
+from src.events.types import DEBUG, FULLSCREEN, MENU_BACK, MENU_PAUSE, QUIT, MENU_MOVE_CURSOR
 from src.settings.lang import Lang
 from src.settings.settings import Settings
 from src.sounds.sound import Sound
-from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE
+from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE, Orientation
 from src.world.level import Level
+
 
 class GameEngine:
     
@@ -43,6 +44,7 @@ class GameEngine:
         Lang.load(Lang.Langs(Settings["lang"]))
         Debug.init()
         
+        EventQueue.init()
         Camera.init()
         
         Sound.load()
@@ -50,8 +52,8 @@ class GameEngine:
         log.info("Loading menus")
         Component.init()
         
-        EscapeMenu.quit = cls.quit
-        EscapeMenu.init()
+        PauseMenu.quit = cls.quit
+        PauseMenu.init()
         AchievementsMenu.init()
         SettingsMenu.init()
         LanguageMenu.init()
@@ -83,6 +85,7 @@ class GameEngine:
     
     @classmethod
     def handle_events(cls):
+        EventQueue.pause_menu_opened = PauseMenu.opened
         EventQueue.update()
         
         for event in EventQueue:
@@ -96,10 +99,16 @@ class GameEngine:
                 Debug.visible = not Debug.visible
                 
             elif event.type == MENU_BACK:
-                if EscapeMenu.opened:
-                    EscapeMenu.escape()
-                else:
-                    EscapeMenu.open()
+                if PauseMenu.opened:
+                    PauseMenu.escape()
+            
+            elif event.type == MENU_PAUSE:
+                if not PauseMenu.opened:
+                    PauseMenu.open()
+                
+            elif event.type == MENU_MOVE_CURSOR:
+                if PauseMenu.opened:                    
+                    PauseMenu.select_component(event.x, event.y)
                 
     @classmethod
     def update(cls):
@@ -107,8 +116,8 @@ class GameEngine:
         
         DataStorage.update.update(dt)
         
-        if EscapeMenu.opened:
-            EscapeMenu.update(dt)
+        if PauseMenu.opened:
+            PauseMenu.update(dt)
         
         if Debug.visible:
             Debug.Infos.fps = round(cls.clock.get_fps())
@@ -120,8 +129,8 @@ class GameEngine:
         
         Camera.draw(cls.player)
         
-        if EscapeMenu.opened:
-            EscapeMenu.render()
+        if PauseMenu.opened:
+            PauseMenu.render()
         
         if Debug.visible:
             Debug.render()
