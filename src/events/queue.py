@@ -6,6 +6,7 @@ from pygame.locals import K_ESCAPE, K_F3, K_F11, KEYUP, MOUSEBUTTONUP
 from pygame.locals import QUIT as P_QUIT
 from pygame.math import Vector2
 from pygame.mouse import get_pos as get_mouse_pos
+from pygame.mouse import get_pressed as get_mouse_pressed
 
 from src.events.event import Event
 from src.events.types import DEBUG, FULLSCREEN, MENU_BACK, QUIT
@@ -29,6 +30,7 @@ class EventQueue(metaclass=EventQueueMeta):
     __queue = deque()
     
     click: bool
+    click_pressed: bool
     cursor: Vector2
     
     __player_direction = Vector2()
@@ -54,7 +56,8 @@ class EventQueue(metaclass=EventQueueMeta):
             
             elif t == MOUSEBUTTONUP:
                 cls.click = True
-                    
+        
+        
         keys = get_keys_pressed()
         cls.cursor = Vector2(get_mouse_pos())
         
@@ -70,6 +73,9 @@ class EventQueue(metaclass=EventQueueMeta):
             cls.__player_direction.x = 1
             
         cls.player_is_sprinting = keys[Settings["key.sprint"]]
+        
+        mouse = get_mouse_pressed()
+        cls.click_pressed = mouse[0]
     
     @classmethod
     def post(cls, event: Event):

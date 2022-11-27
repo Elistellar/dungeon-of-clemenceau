@@ -1,4 +1,4 @@
-from src.display.resource_loader import ResourceLoader
+from src.display.resource import Resource
 from src.settings.settings import Settings
 
 
@@ -24,10 +24,11 @@ class Sound:
         volume is an int between 0 and 100 
         """
         cls.channels[channel_name] = volume / 100
+        Settings.set(f"volume.{channel_name}", volume)
         
     @classmethod
     def play(cls, sound_name: str, channel_name: str):
-        s = ResourceLoader[f"sound.{sound_name}"]
+        s = Resource.snd(sound_name)
         s.set_volume(cls.channels[channel_name])
         s.play()
     

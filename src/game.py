@@ -9,8 +9,7 @@ from src.data_storage.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.hud.debug import Debug
 from src.display.hud.menu.achievements import AchievementsMenu
-from src.display.hud.menu.components.large_button import LargeButton
-from src.display.hud.menu.components.small_button import SmallButton
+from src.display.hud.menu.components.component import Component
 from src.display.hud.menu.controller import ControllerMenu
 from src.display.hud.menu.display import DisplayMenu
 from src.display.hud.menu.escape import EscapeMenu
@@ -24,6 +23,7 @@ from src.events.queue import EventQueue
 from src.events.types import DEBUG, FULLSCREEN, MENU_BACK, QUIT
 from src.settings.lang import Lang
 from src.settings.settings import Settings
+from src.sounds.sound import Sound
 from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE
 from src.world.level import Level
 
@@ -45,9 +45,10 @@ class GameEngine:
         
         Camera.init()
         
+        Sound.load()
+        
         log.info("Loading menus")
-        SmallButton.init()
-        LargeButton.init()
+        Component.init()
         
         EscapeMenu.quit = cls.quit
         EscapeMenu.init()

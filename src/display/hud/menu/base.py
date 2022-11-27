@@ -10,6 +10,7 @@ from src.display.window import Window
 from src.events.event import Event
 from src.events.queue import EventQueue as Events
 from src.events.types import MENU_BACK
+from src.sounds.sound import Sound
 from src.utils.consts import COLOR_MENU_BACKGROUND, Orientation
 
 
@@ -58,6 +59,8 @@ class BaseMenu:
                     if component is None: continue
                     
                     if component.rect.collidepoint(Events.cursor):
+                        if not component.is_hovered:
+                            Sound.play("button.hover", "menu")
                         component.is_hovered = True
                         cls.cursor = x, y
                         

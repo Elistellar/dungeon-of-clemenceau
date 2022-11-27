@@ -4,6 +4,7 @@ from pygame import Rect
 
 from src.display.hud.menu.components.component import Component
 from src.events.queue import EventQueue as Events
+from src.sounds.sound import Sound
 
 
 class Button(Component):
@@ -15,6 +16,6 @@ class Button(Component):
         self.args = args
         
     def update(self, dt: int):
-        if self.is_hovered:
-            if Events.click:
-                self.on_click(*self.args)
+        if self.is_hovered and Events.click:
+            self.on_click(*self.args)
+            Sound.play("button.click", "menu")

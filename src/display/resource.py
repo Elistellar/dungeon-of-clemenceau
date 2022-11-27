@@ -5,6 +5,7 @@ from pathlib import Path
 from pygame import Surface
 from pygame.image import load as load_image
 from pygame.mixer import Sound
+from pygame.mixer import init as init_sound
 from pygame.font import Font
 from pygame.font import init as init_font
 
@@ -39,6 +40,7 @@ class Resource:
                 for key, _path in assets["spritesheet"].items()
             }
             
+            init_sound()
             cls.__sounds = {
                 key: Sound(_p := path(cls.SOUNDS_PATH + _path))
                 for key, _path in assets["sounds"].items()

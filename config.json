@@ -1,8 +1,8 @@
 {
     "lang": "en",
-    "volume.entity": 50,
-    "volume.menu": 13,
-    "volume.music": 53,
+    "volume.entity": 75.0,
+    "volume.menu": 30.98,
+    "volume.music": 43.23,
     "key.move_forward": 122,
     "key.move_backward": 115,
     "key.move_left": 113,
