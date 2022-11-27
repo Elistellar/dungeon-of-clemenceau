@@ -36,9 +36,8 @@ class Entity(Sprite, Body):
         Body.__init__(self, Rect(*pos, TILE_SIZE, TILE_SIZE))
         
         self.direction = Vector2() #the last movement of the entity
-        self.constrain = Vector2(0,0) #represents a vector imposed by the exterior to the entity (decreaces over time)
+        self.constrain = Vector2() #represents a vector imposed by the exterior to the entity (decreaces over time)
         self.brain = CommandNode()
-        self.speed = self.speeds.WALK
             
         self.state = self.states.IDLEING
         self.orientation = Orientation.SOUTH

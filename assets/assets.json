@@ -1,6 +1,7 @@
 {
     "texture": {
         "balan_tmp": "entities/balan_tmp.png",
+        "proj_tmp": "entities/proj_tmp.png",
         "menu.small_button": "hud/small_button.png",
         "menu.large_button": "hud/large_button.png",
         "menu.small_button_hovered": "hud/hovered_small_button.png",
