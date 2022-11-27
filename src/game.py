@@ -62,9 +62,9 @@ class GameEngine:
         
         cls.player = Player(Vector2())
 
-        Projectile(Vector2(100,75), Vector2(1,1))
-        
         cls.load_level(1)
+        
+        Projectile(Vector2(100,75), Vector2(1,1))
         
         cls.clock = Clock()
 

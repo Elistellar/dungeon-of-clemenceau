@@ -10,8 +10,9 @@ class Projectile(Entity):
     """
 
     SPRITE_SHEET_NAME = "proj_tmp"
-    HITBOX = 0,0
+    HITBOX = 0, 0
 
     def __init__(self, pos: Vector2, direction: Vector2):
         super().__init__(pos)
+        
         self.brain = ProjectileNode(direction)
