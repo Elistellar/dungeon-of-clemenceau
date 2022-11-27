@@ -1,4 +1,3 @@
-from pygame.key import get_pressed
 from pygame.math import Vector2
 
 from src.commanding.command_node import CommandNode
@@ -20,8 +19,6 @@ class PlayerNode(CommandNode):
         """
         Processes key inputs from the Event Queue to get a direction where to move
         """
-        direction = Vector2(0,0)
-        sprints = False
         # processing events                    
         if Events.player_is_sprinting:
             self.speed = self.speeds.SPRINT

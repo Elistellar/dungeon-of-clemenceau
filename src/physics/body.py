@@ -12,8 +12,6 @@ class Body:
     CENTER_POS = Vector2(TILE_SIZE) / 2
     
     # to overwite
-    SPRITE_SHEET_NAME: str
-    
     HITBOX = 0, 0
 
     def __init__(self, rect: Rect):
