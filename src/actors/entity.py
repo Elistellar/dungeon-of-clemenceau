@@ -32,7 +32,7 @@ class Entity(Sprite, Body):
         ATTACKING = "attack"
     
     def __init__(self, pos: Vector2):
-        Sprite.__init__(self, Camera, DataStorage.entities)
+        Sprite.__init__(self, Camera, DataStorage.update)
         Body.__init__(self, Rect(*pos, TILE_SIZE, TILE_SIZE))
         
         self.direction = Vector2() #the last movement of the entity

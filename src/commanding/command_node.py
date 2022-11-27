@@ -7,8 +7,8 @@ class CommandNode:
     """
 
     class speeds:
-        WALK = 0.15
-        SPRINT = 0.25
+        WALK = 0.002
+        SPRINT = 0.004
 
     def __init__(self):
         pass

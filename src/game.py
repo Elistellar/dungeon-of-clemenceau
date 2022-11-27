@@ -27,7 +27,6 @@ from src.sounds.sound import Sound
 from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE
 from src.world.level import Level
 
-
 class GameEngine:
     
     @classmethod
@@ -75,7 +74,7 @@ class GameEngine:
             
             cls.handle_events()
             cls.update()
-            cls.render()        
+            cls.render()
     
     @classmethod
     def handle_events(cls):
@@ -101,14 +100,14 @@ class GameEngine:
     def update(cls):
         dt = cls.clock.get_time()
         
-        DataStorage.entities.update(dt)
+        DataStorage.update.update(dt)
         
         if EscapeMenu.opened:
             EscapeMenu.update(dt)
         
         if Debug.visible:
             Debug.Infos.fps = round(cls.clock.get_fps())
-    
+
     @classmethod
     def render(cls):
         Window.surface.fill(COLOR_BLACK)
