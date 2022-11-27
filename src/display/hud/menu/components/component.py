@@ -12,6 +12,9 @@ class Component:
         cls.LARGE_BUTTON = Resource.img("menu.large_button")
         cls.LARGE_BUTTON_HOVERED = Resource.img("menu.large_button_hovered")
         
+        cls.MEDIUM_BUTTON = Resource.img("menu.medium_button")
+        cls.MEDIUM_BUTTON_HOVERED = Resource.img("menu.medium_button_hovered")
+        
         cls.SMALL_BUTTON = Resource.img("menu.small_button")
         cls.SMALL_BUTTON_HOVERED = Resource.img("menu.small_button_hovered")
         

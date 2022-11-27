@@ -33,6 +33,13 @@ class BaseMenu:
                 cls.submenu = None
             
         else:
+            for row in cls.components:
+                for component in row:
+                    if hasattr(component, "listening") and component.listening:
+                        component.listening = False
+                        Events.stop_listening()
+                        return
+                    
             cls.opened = False
     
     @classmethod
@@ -58,14 +65,15 @@ class BaseMenu:
                 for x, component in enumerate(row):
                     if component is None: continue
                     
-                    if component.rect.collidepoint(Events.cursor):
-                        if not component.is_hovered:
-                            Sound.play("button.hover", "menu")
-                        component.is_hovered = True
-                        cls.cursor = x, y
-                        
-                    if cls.cursor != (x, y):
-                        component.is_hovered = False
+                    if not Events.listening:
+                        if component.rect.collidepoint(Events.cursor):
+                            if not component.is_hovered:
+                                Sound.play("button.hover", "menu")
+                            component.is_hovered = True
+                            cls.cursor = x, y
+                            
+                        if cls.cursor != (x, y):
+                            component.is_hovered = False
                         
                     component.update(dt)
 

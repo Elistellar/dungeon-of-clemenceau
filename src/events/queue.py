@@ -28,10 +28,12 @@ class EventQueueMeta(type):
 class EventQueue(metaclass=EventQueueMeta):
     
     __queue = deque()
+    listening = False
     
     click: bool
     click_pressed: bool
     cursor: Vector2
+    key_input: int = None    
     
     __player_direction = Vector2()
     player_is_sprinting: bool
@@ -39,6 +41,18 @@ class EventQueue(metaclass=EventQueueMeta):
     @classmethod
     def update(cls):
         cls.click = False
+        cls.key_input = None
+        
+        if cls.listening:
+            for event in pygame_event():
+                if event.type == P_QUIT:
+                    cls.post(Event(QUIT))
+                elif event.type == KEYUP:
+                    if event.key == K_ESCAPE:
+                        cls.post(Event(MENU_BACK))
+                    else:
+                        cls.key_input = event.key
+            return
         
         for event in pygame_event():
             t = event.type
@@ -90,3 +104,14 @@ class EventQueue(metaclass=EventQueueMeta):
             return cls.__player_direction.normalize()
         
         return cls.__player_direction
+    
+    @classmethod
+    def listen_for_key(cls):
+        """
+        Block almost all events, except QUIT and KEYUP, to allow user to change keybinds.
+        """
+        cls.listening = True
+        
+    @classmethod
+    def stop_listening(cls):
+        cls.listening = False

@@ -2,8 +2,10 @@
     "texture": {
         "balan_tmp": "entities/balan_tmp.png",
         "menu.small_button": "hud/small_button.png",
+        "menu.medium_button": "hud/medium_button.png",
         "menu.large_button": "hud/large_button.png",
         "menu.small_button_hovered": "hud/hovered_small_button.png",
+        "menu.medium_button_hovered": "hud/hovered_medium_button.png",
         "menu.large_button_hovered": "hud/hovered_large_button.png",
         "menu.slider_bar": "hud/slider_bar.png",
         "menu.slider_cursor": "hud/slider_cursor.png",
