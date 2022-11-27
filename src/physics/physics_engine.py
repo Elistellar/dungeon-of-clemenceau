@@ -23,13 +23,15 @@ class PhysicsEngine:
 
     def clip(direction: Vector2, origin: Rect):
         """
-        clips the direction vector from the movment of the origin Rect
+        clips in place the direction vector from the movment of the origin Rect
         considering all obstacles in the scene
-        we are considering object are not overlaping
-        returns the cliped vector
+        we are assuming object are not overlaping
+        returns a boolean indicating if there were a collision
         """
         if direction.x ==0 and direction.y == 0: #if not moving, no clipping needs to be done
-            return direction
+            return False
+
+        dir_cpy = Vector2(direction)
 
         for obstacle in DataStorage.obstacles.sprites() + DataStorage.update.sprites():
             target = obstacle.hitbox
@@ -46,7 +48,7 @@ class PhysicsEngine:
                 elif abs(relative_pos.y)<abs(minimal_vector.y): #collision on x (one is to the left of the other)
                     direction.x = PhysicsEngine.amin(direction.x, relative_pos.x - minimal_vector.x)
 
-        return direction
+        return direction != dir_cpy
 
     def all_on_line(origin: Vector2, direction: Vector2) -> list:
         """

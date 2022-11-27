@@ -37,6 +37,7 @@ class Entity(Sprite, Body):
         
         self.direction = Vector2() #the last movement of the entity
         self.constrain = Vector2() #represents a vector imposed by the exterior to the entity (decreaces over time)
+        self.collided = False #indicates if the entity collided something on last processing
         self.brain = CommandNode()
             
         self.state = self.states.IDLEING
@@ -96,6 +97,6 @@ class Entity(Sprite, Body):
         else:
             self.constrain += self.constrain.normalize()*CONSTRAIN_DECREASE
 
-        PhysicsEngine.clip(self.direction, self.hitbox)
+        self.collided = PhysicsEngine.clip(self.direction, self.hitbox)
         self.hitbox.move_ip(self.direction.x, self.direction.y)
         self.rect.center = self.hitbox.center 

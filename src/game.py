@@ -5,7 +5,6 @@ from pygame.math import Vector2
 from pygame.time import Clock
 
 from src.actors.player import Player
-from src.actors.projectile import Projectile
 from src.data_storage.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.hud.debug import Debug
@@ -65,8 +64,6 @@ class GameEngine:
         cls.player = Player(Vector2())
 
         cls.load_level(1)
-        
-        Projectile(Vector2(100,75), Vector2(1,1))
         
         cls.clock = Clock()
 
