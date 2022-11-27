@@ -16,4 +16,4 @@ class ProjectileNode(CommandNode):
         """
         Processes key inputs from the Event Queue to get a direction where to move
         """      
-        return self.dir
+        return self.dir*self.speeds.FLY

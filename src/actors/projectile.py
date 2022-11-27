@@ -1,4 +1,5 @@
 from pygame.math import Vector2
+from pygame.sprite import Sprite
 
 from src.actors.entity import Entity
 from src.commanding.projectile_node import ProjectileNode
@@ -16,3 +17,10 @@ class Projectile(Entity):
         super().__init__(pos)
         
         self.brain = ProjectileNode(direction)
+
+    def update(self, dt: int):
+
+        # performs standard entity actions
+        super().update(dt)
+        if self.collided:
+            self.kill()

@@ -13,7 +13,6 @@ class PlayerNode(CommandNode):
     def __init__(self):
         super().__init__()
         self.speed = self.speeds.WALK
-        pass
 
     def get_direction(self) -> Vector2:
         """
@@ -25,4 +24,4 @@ class PlayerNode(CommandNode):
         else:
             self.speed = self.speeds.WALK
 
-        return Events.get_player_direction()
+        return Events.get_player_direction()*self.speed
