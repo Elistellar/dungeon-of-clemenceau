@@ -13,6 +13,7 @@ class Orientation(Enum):
     WEST  = "west"
 
 CONSTRAIN_DECREASE = 0.1
+PROJECTILE_BASE_HEIGHT = 40
 
 COLOR_BTN_TEXT = (255, 255, 255)
 

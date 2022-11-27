@@ -25,7 +25,7 @@ class PhysicsEngine:
         """
         clips in place the direction vector from the movment of the origin Rect
         considering all obstacles in the scene
-        we are assuming object are not overlaping
+        If object are already overlaping, the vector will not be clipped
         returns a boolean indicating if there were a collision
         """
         if direction.x ==0 and direction.y == 0: #if not moving, no clipping needs to be done
@@ -43,9 +43,14 @@ class PhysicsEngine:
                 minimal_vector.x =  (origin.width+target.width)*0.5*(-1 if relative_pos.x<0 else 1)
                 minimal_vector.y = (origin.height+target.height)*0.5*(-1 if relative_pos.y<0 else 1)
 
-                if abs(relative_pos.x)<abs(minimal_vector.x): #collision on y (one is just above the other)
+                collide_y = abs(relative_pos.x)<abs(minimal_vector.x)
+                collide_x = abs(relative_pos.y)<abs(minimal_vector.y)
+
+                if collide_x and collide_y:
+                    pass
+                elif collide_y: #collision on y (one is just above the other)
                     direction.y = PhysicsEngine.amin(direction.y, relative_pos.y - minimal_vector.y)
-                elif abs(relative_pos.y)<abs(minimal_vector.y): #collision on x (one is to the left of the other)
+                elif collide_x: #collision on x (one is to the left of the other)
                     direction.x = PhysicsEngine.amin(direction.x, relative_pos.x - minimal_vector.x)
 
         return direction != dir_cpy
