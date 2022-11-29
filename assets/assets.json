@@ -23,7 +23,8 @@
     },
     "sounds": {
         "button.click": "btn_click.mp3",
-        "button.hover": "btn_hover.mp3"
+        "button.hover": "btn_hover.mp3",
+        "menu.notif": "notif.mp3"
     },
     "fonts": {
         "main24": {

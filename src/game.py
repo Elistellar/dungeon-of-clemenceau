@@ -17,14 +17,16 @@ from src.display.hud.menu.language import LanguageMenu
 from src.display.hud.menu.pause import PauseMenu
 from src.display.hud.menu.settings import SettingsMenu
 from src.display.hud.menu.sound import SoundMenu
+from src.display.hud.notification import Notification
 from src.display.resource import Resource
 from src.display.window import Window
 from src.events.queue import EventQueue
-from src.events.types import DEBUG, FULLSCREEN, MENU_BACK, MENU_PAUSE, QUIT, MENU_MOVE_CURSOR
+from src.events.types import (DEBUG, FULLSCREEN, MENU_BACK, MENU_MOVE_CURSOR,
+                              MENU_PAUSE, QUIT)
 from src.settings.lang import Lang
 from src.settings.settings import Settings
 from src.sounds.sound import Sound
-from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE, Orientation
+from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE
 from src.world.level import Level
 
 
@@ -47,6 +49,8 @@ class GameEngine:
         Camera.init()
         
         Sound.load()
+        
+        Notification.init()
         
         log.info("Loading menus")
         Component.init()
@@ -94,6 +98,7 @@ class GameEngine:
                 
             elif event.type == DEBUG:
                 Debug.visible = not Debug.visible
+                Notification("achievement", "Test", 4)
                 
             elif event.type == MENU_BACK:
                 if PauseMenu.opened:
@@ -109,10 +114,11 @@ class GameEngine:
                 
     @classmethod
     def update(cls):
-        dt = cls.clock.get_time()
+        dt = cls.clock.get_time()            
         
         DataStorage.update.update(dt)
-        
+        Notification.update(dt)
+                
         if PauseMenu.opened:
             PauseMenu.update(dt)
         
@@ -125,6 +131,8 @@ class GameEngine:
         Window.hud_surface.fill(COLOR_BLACK_ALPHA)
         
         Camera.draw(cls.player)
+        
+        Notification.render()
         
         if PauseMenu.opened:
             PauseMenu.render()
