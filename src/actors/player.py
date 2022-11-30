@@ -6,8 +6,8 @@ from src.commanding.player_node import PlayerNode
 #temporary for projectiles testing
 from src.events.queue import EventQueue
 from src.actors.projectile import Projectile
-from src.display.camera import Camera
 from src.display.window import Window
+from src.items.container import Container
 
 
 class Player(Creature):
@@ -25,6 +25,7 @@ class Player(Creature):
         self.brain = PlayerNode()
         
         self.paused = False
+        self.inventory = Container(6)
 
         #temporary for projectiles testing
         self.cooldown = 0

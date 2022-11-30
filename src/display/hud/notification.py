@@ -26,7 +26,7 @@ class Notification:
     
     @classmethod
     def update(cls, dt: int):
-        for notif in cls.__queue:
+        for i, notif in enumerate(cls.__queue):
             notif.time_visible += dt
             
             if notif.time_visible > notif.duration:
@@ -38,10 +38,11 @@ class Notification:
                     notif.rect.x - dt * cls.ANIMATION_SPEED
                 )
     
+                notif.rect.y = cls.MARGIN + i * (cls.MARGIN + cls.HEIGHT)
+    
     @classmethod
     def render(cls):
-        for i, notif in enumerate(cls.__queue):
-            notif.rect.y = cls.MARGIN + i * (cls.MARGIN + cls.HEIGHT)
+        for notif in cls.__queue:
             
             Window.hud_surface.blit(
                 cls.SURFACE,

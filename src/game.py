@@ -4,6 +4,8 @@ from typing import NoReturn
 from pygame.math import Vector2
 from pygame.time import Clock
 
+from src.achievements.achievement import Achievement
+from src.achievements.triggers import get_item
 from src.actors.player import Player
 from src.data_storage.data_storage import DataStorage
 from src.display.camera import Camera
@@ -45,12 +47,16 @@ class GameEngine:
         Lang.load(Lang.Langs(Settings["lang"]))
         Debug.init()
         
+        
         EventQueue.init()
         Camera.init()
         
         Sound.load()
         
         Notification.init()
+        
+        log.info("Loading achievements")
+        # Achievement("book", lambda p: get_item(p, Arcsin))
         
         log.info("Loading menus")
         Component.init()
