@@ -15,6 +15,7 @@ from src.events.event import Event
 from src.events.types import (DEBUG, FULLSCREEN, MENU_BACK, MENU_MOVE_CURSOR,
                               MENU_PAUSE, QUIT)
 from src.settings.settings import Settings
+from src.utils.consts import JOY_A, JOY_B, JOY_SELECT, JOY_START, JOY_X, JOY_Y
 
 
 class EventQueueMeta(type):
@@ -67,7 +68,7 @@ class EventQueue(metaclass=EventQueueMeta):
                         cls.key_input = event.key
                         
                 elif event.type == JOYBUTTONUP:
-                    if event.button == 1:
+                    if event.button == JOY_B:
                         cls.post(Event(MENU_BACK))
             return
         
@@ -92,11 +93,11 @@ class EventQueue(metaclass=EventQueueMeta):
                 cls.click = True
                 
             elif t == JOYBUTTONUP:
-                if event.button == 0:
+                if event.button == JOY_A:
                     cls.click = True
-                elif event.button == 1:
+                elif event.button == JOY_B:
                     cls.post(Event(MENU_BACK))
-                elif event.button == 6:
+                elif event.button == JOY_SELECT:
                     if cls.pause_menu_opened:
                         cls.post(Event(MENU_BACK))
                     else:
@@ -134,7 +135,7 @@ class EventQueue(metaclass=EventQueueMeta):
         
         # menus
         mouse = get_mouse_pressed()
-        cls.click_pressed = mouse[0]
+        cls.click_pressed = mouse[0] or cls.__joystick.get_button(JOY_A)
         
         if cls.__joystick:
             x = cls.__joystick.get_axis(2) # horizontal right

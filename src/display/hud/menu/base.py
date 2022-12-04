@@ -7,6 +7,7 @@ from pygame.locals import SRCALPHA
 from pygame.math import Vector2
 
 from src.display.hud.menu.components.component import Component
+from src.display.hud.menu.components.slider import Slider
 from src.display.window import Window
 from src.events.event import Event
 from src.events.queue import EventQueue as Events
@@ -99,19 +100,42 @@ class BaseMenu:
     def select_component(cls, x: int, y: int):
         if cls.submenu:
             cls.submenu.select_component(x, y)
-        else:
-            if y == -1:
+        else:       
+            if y == 1: 
+                if cls.cursor.y < len(cls.components) - 1:
+                    cls.cursor.y += 1
+            
+            elif y == -1:
                 if cls.cursor.y > 0:
                     cls.cursor.y -= 1
                     
-            elif x == -1:
-                if cls.cursor.x > 0:
+            elif x == 1:
+                if Events.click_pressed:
+                    component = cls.components[int(cls.cursor.y)][int(cls.cursor.x)]
+                    print(1)
+                    if isinstance(component, Slider):
+                        print(2)
+                        component.cursor_rect.centerx += min(
+                            component.rect.right - component.PADDINGX,
+                            component.cursor_rect.centerx + 5
+                        )
+                        
+                elif cls.cursor.x < len(cls.components[0]) - 1:
+                    cls.cursor.x += 1
+                    
+            if x == -1:
+                if Events.click_pressed:
+                    print(3)
+                    component = cls.components[int(cls.cursor.y)][int(cls.cursor.x)]
+                    if isinstance(component, Slider):
+                        print(4)
+                        component.cursor_rect.centerx += max(
+                            component.rect.left + component.PADDINGX,
+                            component.cursor_rect.centerx - 5
+                        )
+                        
+                elif cls.cursor.x > 0:
                     cls.cursor.x -= 1
                     
-            elif y == 1:
-                if cls.cursor.y < len(cls.components) - 1:
-                    cls.cursor.y += 1
                     
-            elif x == 1:
-                if cls.cursor.x < len(cls.components[0]) - 1:
-                    cls.cursor.x += 1
+            
