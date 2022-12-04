@@ -1,18 +1,26 @@
-from src.display.resource_loader import ResourceLoader
+from pygame import Rect
+
+from src.display.resource import Resource
 
 
 class Component:
-    """
-    A base class for all menu components.
-    Handle all events required by subclasses.
-    """
     
     @classmethod
     def init(cls):
-        cls.font = ResourceLoader["font.main24"]
+        cls.FONT = Resource.fnt("main24")
+        
+        cls.LARGE_BUTTON = Resource.img("menu.large_button")
+        cls.LARGE_BUTTON_HOVERED = Resource.img("menu.large_button_hovered")
+        
+        cls.MEDIUM_BUTTON = Resource.img("menu.medium_button")
+        cls.MEDIUM_BUTTON_HOVERED = Resource.img("menu.medium_button_hovered")
+        
+        cls.SMALL_BUTTON = Resource.img("menu.small_button")
+        cls.SMALL_BUTTON_HOVERED = Resource.img("menu.small_button_hovered")
+        
+        cls.SLIDER_BAR = Resource.img("menu.slider_bar")
+        cls.SLIDER_CURSOR = Resource.img("menu.slider_cursor")
     
-    mouse_pos: tuple[int, int]
-    left_click: bool
-    left_click_hold: bool
-    keyup: int | None
-    waiting_for_key = False
+    def __init__(self, rect: Rect):
+        self.rect = rect
+        self.is_hovered = False

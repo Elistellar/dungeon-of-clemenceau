@@ -1,154 +1,158 @@
 import logging as log
+from typing import NoReturn
 
-from pygame.event import get as get_events
-from pygame.locals import K_ESCAPE, K_F3, KEYUP, MOUSEBUTTONUP, QUIT
 from pygame.math import Vector2
 from pygame.time import Clock
 
+from src.achievements.achievement import Achievement
+from src.achievements.triggers import get_item
+from src.actors.player import Player
+from src.data_storage.data_storage import DataStorage
 from src.display.camera import Camera
 from src.display.hud.debug import Debug
+from src.display.hud.menu.achievements import AchievementsMenu
 from src.display.hud.menu.components.component import Component
-from src.display.hud.menu.escape import EscapeMenu
-from src.display.hud.menu.loader import load_menus
-from src.display.mouse import Mouse
-from src.display.resource_loader import ResourceLoader
-from src.display.sprite_sheet import SpriteSheet
+from src.display.hud.menu.controller import ControllerMenu
+from src.display.hud.menu.display import DisplayMenu
+from src.display.hud.menu.keybinds import KeybindsMenu
+from src.display.hud.menu.language import LanguageMenu
+from src.display.hud.menu.pause import PauseMenu
+from src.display.hud.menu.settings import SettingsMenu
+from src.display.hud.menu.sound import SoundMenu
+from src.display.hud.notification import Notification
+from src.display.resource import Resource
 from src.display.window import Window
-from src.entities.player import Player
-from src.lang import Lang
-from src.schedule import Schedule
-from src.settings import Settings
-from src.sound import Sound
-from src.utils.consts import FRAMERATE
-from src.world.generator import LevelGenerator
-from src.world.groups import UpdateGroup
-from src.world.tmx.loader import TmxLoader
+from src.events.queue import EventQueue
+from src.events.types import (DEBUG, FULLSCREEN, MENU_BACK, MENU_MOVE_CURSOR,
+                              MENU_PAUSE, QUIT)
+from src.settings.lang import Lang
+from src.settings.settings import Settings
+from src.sounds.sound import Sound
+from src.utils.consts import COLOR_BLACK, COLOR_BLACK_ALPHA, FRAMERATE
+from src.world.level import Level
 
 
-class Game:
-    """
-    The main game class, where the loop stands.
-    """
+class GameEngine:
     
     @classmethod
-    def start(cls):
-        cls.load()
-
-        cls.running = True
-        cls.clock = Clock()
-        
-        Camera.init()
-        
-        cls.player = Player(Vector2(0, 0))
-        
-        cls.next_level()
-        
-        while cls.running:
-            cls.clock.tick(FRAMERATE)
-            cls.mainloop()
-            
-    @classmethod
-    def load(cls):
+    def init(cls):
         log.info("Loading game")
-        Window.create()
+        Window.init(Window.Size.HD, Window.Size.HD)
+        Window.set_title("Dungeon of Clemenceau")
+        Resource.load()
+        Window.set_icon(Resource.img("favicon"))
         
         log.info("Loading settings")
         Settings.load()
+        Lang.load(Lang.Langs(Settings["lang"]))
+        Debug.init()
+        
+        
+        EventQueue.init()
+        Camera.init()
+        
         Sound.load()
         
-        log.info("Loading resources :")
-        ResourceLoader.load()
-        SpriteSheet.load()
-        TmxLoader.load()
-        Lang.load(Lang.Langs(Settings["lang"]))
+        Notification.init()
+        
+        log.info("Loading achievements")
+        # Achievement("book", lambda p: get_item(p, Arcsin))
         
         log.info("Loading menus")
         Component.init()
-        load_menus()
-        Debug.init()
+        
+        PauseMenu.quit = cls.quit
+        PauseMenu.init()
+        AchievementsMenu.init()
+        SettingsMenu.init()
+        LanguageMenu.init()
+        ControllerMenu.init()
+        KeybindsMenu.init()
+        SoundMenu.init()
+        DisplayMenu.init()
+        
+        cls.player = Player(Vector2())
+
+        cls.load_level(1)
+        
+        cls.clock = Clock()
+
     
     @classmethod
-    def mainloop(cls):
-        dt = cls.clock.get_time()
-        Debug.Infos.fps = round(cls.clock.get_fps())
+    def start(cls):
+        cls.init()
+        log.info("Let's go !")
         
-        cls.handle_events()
-
-        Schedule.update()
-        UpdateGroup.update(dt)
-        if EscapeMenu.is_open:
-            EscapeMenu.update()
+        while True:
+            cls.clock.tick(FRAMERATE)
             
-            if not EscapeMenu.is_open:
-                cls.player.paused = False
-        
-        cls.render()
+            cls.handle_events()
+            cls.update()
+            cls.render()
     
     @classmethod
     def handle_events(cls):
-        Mouse.btns = [
-            False, False, False
-        ]
+        EventQueue.pause_menu_opened = PauseMenu.opened
+        EventQueue.update()
         
-        Component.keyup = None
-        Component.left_click = False
-        
-        for event in get_events():
-            
-            if event.type == MOUSEBUTTONUP:
-                Mouse.btns[event.button-1] = True
-                if event.button == 1:
-                    Component.left_click = True
-                    
-            elif event.type == KEYUP:
-                if event.key == K_ESCAPE:
-                    if EscapeMenu.is_open:
-                        
-                        if Component.waiting_for_key:
-                            Component.waiting_for_key = False
-                            
-                        else:
-                            EscapeMenu.close()
-                            
-                            if not EscapeMenu.is_open:
-                                cls.player.paused = False
-                    else:
-                        EscapeMenu.open()
-                        cls.player.paused = True
-
-                elif event.key == K_F3:
-                    Debug.visible = not Debug.visible
-                
-                else:
-                    Component.keyup = event.key
-                    
-            elif event.type == QUIT:
+        for event in EventQueue:
+            if event.type == QUIT:
                 cls.quit()
                 
-        Component.mouse_pos = Mouse.get_pos()
-        Component.left_click_hold = Mouse.get_pressed(0)
-    
+            elif event.type == FULLSCREEN:
+                Window.toggle_fullscreen()
+                
+            elif event.type == DEBUG:
+                Debug.visible = not Debug.visible
+                Notification("achievement", "Test", 4)
+                
+            elif event.type == MENU_BACK:
+                if PauseMenu.opened:
+                    PauseMenu.escape()
+            
+            elif event.type == MENU_PAUSE:
+                if not PauseMenu.opened:
+                    PauseMenu.open()
+                
+            elif event.type == MENU_MOVE_CURSOR:
+                if PauseMenu.opened:                    
+                    PauseMenu.select_component(event.x, event.y)
+                
+    @classmethod
+    def update(cls):
+        dt = cls.clock.get_time()            
+        
+        DataStorage.update.update(dt)
+        Notification.update(dt)
+                
+        if PauseMenu.opened:
+            PauseMenu.update(dt)
+        
+        if Debug.visible:
+            Debug.Infos.fps = round(cls.clock.get_fps())
+
     @classmethod
     def render(cls):
-        Window.surface.fill((0, 0, 0))
+        Window.surface.fill(COLOR_BLACK)
+        Window.hud_surface.fill(COLOR_BLACK_ALPHA)
         
-        # level
         Camera.draw(cls.player)
         
-        if EscapeMenu.is_open:
-            EscapeMenu.render()
-            
+        Notification.render()
+        
+        if PauseMenu.opened:
+            PauseMenu.render()
+        
         if Debug.visible:
             Debug.render()
-        
+               
         Window.render()
+        
+    @classmethod
+    def load_level(cls, n: int):
+        cls.map = Level(n, cls.player)
     
     @classmethod
-    def next_level(cls):
-        cls.current_level = LevelGenerator.generate(cls.player)
-    
-    @classmethod
-    def quit(cls):
-        cls.running = False
-        log.info("Closing game")
+    def quit(cls) -> NoReturn:
+        log.info("Bye !")
         exit(0)

@@ -2,7 +2,7 @@ import logging as log
 from traceback import format_exc
 from argparse import ArgumentParser, BooleanOptionalAction
 
-from src.logger import init_logger
+from src.utils.logger import init_logger
 
 
 if __name__ == "__main__":
@@ -20,9 +20,9 @@ if __name__ == "__main__":
 
     # Start game
     try:
-        from src.game import Game
+        from src.game import GameEngine
 
-        Game.start()
+        GameEngine.start()
     
     except SystemExit:
         pass

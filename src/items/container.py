@@ -1,9 +1,11 @@
+from typing import List
+
 from src.items.item import Item
 
 
 class Container:
     
-    items: list[Item, None]
+    items: List[Item | None]
     
     def __init__(self, _len: int):
         self.items = [None for _ in range(_len)]

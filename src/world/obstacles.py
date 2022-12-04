@@ -1,8 +1,11 @@
 from pygame import Rect
 from pygame.sprite import Sprite
 
+from src.physics.body import Body
+from src.data_storage.data_storage import DataStorage
 
-class Obstacle(Sprite):
+
+class Obstacle(Sprite, Body):
     """
     A sprite that only have an hitbox.
     """
@@ -11,5 +14,5 @@ class Obstacle(Sprite):
         """
         Create a new obstacle.
         """
-        super().__init__()
-        self.rect = rect
+        Sprite.__init__(self, DataStorage.obstacles)
+        Body.__init__(self, rect)

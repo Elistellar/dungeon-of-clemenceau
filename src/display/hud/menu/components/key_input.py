@@ -1,98 +1,66 @@
-from typing import Callable
+from typing import Tuple
 
 from pygame import Rect
-from pygame.draw import rect as draw_rect
-from pygame.key import name as get_key_name
+from pygame.key import name as key_name
 
 from src.display.hud.menu.components.component import Component
-from src.display.mouse import Mouse
+from src.display.hud.menu.components.label import Label
+from src.events.queue import EventQueue as Events
+from src.sounds.sound import Sound
+from src.settings.settings import Settings
 from src.display.window import Window
-from src.lang import Lang
-from src.sound import Sound
-from src.utils.consts import COLOR_BTN_BG, COLOR_BTN_BG_HOVER, COLOR_BTN_TEXT
+from src.utils.consts import COLOR_BUTTON_TEXT
+from src.settings.lang import Lang
 
 
 class KeyInput(Component):
-    """
-    A menu component use to set a keybind
-    """
     
-    def __init__(self, text: str, rect: tuple[int, int, int, int], setter: Callable[[int], None], getter: Callable[[], int]):
-        """
-        Create a new KeyInput.
+    WIDTH = 128
+    HEIGHT = 64
+    
+    def __init__(self, pos: Tuple[int, int], label: str, key: str):
+        super().__init__(Rect(*pos, self.WIDTH, self.HEIGHT))
         
-        Parameters:
-            text (str): The text code to be written on the component label
-            rect (Tuple[int, int, int, int]): The position and size of the component (x, y, width, height)
-            setter (Callable[[int], None]): A function which will be used to set the key entered
-            args (Callable[[], int]): A function which will be used to get the current key
-        """
-        self.rect = Rect(*rect)
+        self.label = Label(self.rect, label)
+        self.key = key
+        self.listening = False
         
-        self.is_hovered = False
-        self._waiting_for_key = False
-        self.setter = setter
-        self.getter = getter
+    def update(self, dt: int):
+        if self.is_hovered and Events.click:
+            Sound.play("button.click", "menu")
+            self.listening = True
+            Events.listen_for_key()
         
-        self.text = text
-        
-    def update(self):
-        # Waiting for a key to be pressed
-        if self._waiting_for_key and self.waiting_for_key:
-            if self.keyup:
-                self.setter(self.keyup)
-                Mouse.activate()
-                self._waiting_for_key = False
-                self.waiting_for_key = False
-        
-        # Reset on 'escape' pressed 
-        elif self._waiting_for_key and not self.waiting_for_key:
-            self._waiting_for_key = False
-        
-        else:
-            # Hovering
-            if self.rect.collidepoint(self.mouse_pos):
-                if not self.is_hovered:
-                    Sound.play("btn_hover", "menu")
-                    self.is_hovered = True
-                
-                # Click
-                if self.left_click:
-                    Sound.play("btn_click", "menu")
-                    Mouse.disable()
-                    self._waiting_for_key = True
-                    self.waiting_for_key = True
-            else:
-                self.is_hovered = False
+        if self.listening and Events.key_input is not None:
+            Settings.set(f"key.{self.key}", Events.key_input)
+            self.listening = False
+            Events.stop_listening()
             
     def render(self):
+        self.label.render()
         
-        # Background
         if self.is_hovered:
-            color = COLOR_BTN_BG_HOVER
+            Window.hud_surface.blit(
+                self.MEDIUM_BUTTON_HOVERED,
+                self.rect
+            )
         else:
-            color = COLOR_BTN_BG
+            Window.hud_surface.blit(
+                self.MEDIUM_BUTTON,
+                self.rect
+            )
         
-        draw_rect(
-            Window.hud_surface,
-            color,
-            self.rect
-        )
+        key_text = key_name(Settings[f"key.{self.key}"])
+        if key_text not in "abcdefghijklmnopqrstuvwxyz":
+            key_text = Lang["key." + key_text.replace(" ", "_")]
+        else:
+            key_text.upper()
         
-        # Label
-        text_surface = self.font.render(Lang[self.text], True, COLOR_BTN_TEXT)
-        Window.hud_surface.blit(
-            text_surface,
-            text_surface.get_rect(centerx=self.rect.centerx + 5, bottom=self.rect.top - 2)
-        )
-        
-        # Key name
-        text_surface = self.font.render(
-            Lang[get_key_name(self.getter())],
-            True,
-            COLOR_BTN_TEXT
+        text_surface = self.FONT.render(
+            key_text,
+            True, COLOR_BUTTON_TEXT
         )
         Window.hud_surface.blit(
             text_surface,
-            text_surface.get_rect(center=self.rect.center),
+            text_surface.get_rect(center=self.rect.center)
         )

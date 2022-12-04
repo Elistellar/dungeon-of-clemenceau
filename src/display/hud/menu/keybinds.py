@@ -1,49 +1,19 @@
-from src.display.hud.menu.components.button import Button
+from src.display.hud.menu.base import BaseMenu
+from src.display.hud.menu.components.large_button import LargeButton
 from src.display.hud.menu.components.key_input import KeyInput
-from src.display.hud.menu.menu import Menu
-from src.settings import Settings
 
 
-class KeybindsMenu(Menu):
-    """
-    The 'Keybinds' settings menu
-    """
+class KeybindsMenu(BaseMenu):
     
     @classmethod
     def init(cls):
-        
-        wb = 80
-        w = 180
-        hb = 40
-        h = 60
-        
-        keys = ( # max 20 with the above consts
-            "move_forward",
-            "move_backward",
-            "move_left",
-            "move_right",
-            "sprint"
+        cls.components = (
+            (KeyInput((436, 190), "keybind.move_forward", "move_forward"),   KeyInput((576, 190), "keybind.move_left", "move_left"),   None),
+            (KeyInput((436, 290), "keybind.move_backward", "move_backward"), KeyInput((576, 290), "keybind.move_right", "move_right"), None),
+            (KeyInput((436, 390), "keybind.sprint", "sprint"),               None,                                                     None),
+            (None,                                                           LargeButton((512, 466), "menu.back", cls.back),           None),
         )
-        
-        def gen_setter(name):
-            def setter(val: int):
-                Settings.set(f"key.{name}", val)
-            return setter
-        
-        def gen_getter(name):
-            def getter() -> int:
-                return Settings[f"key.{name}"]
-            return getter
-        
-        cls.components = tuple(
-            
-            KeyInput(
-                "keybind." + name,
-                (2 * wb + (i // 5) * (wb + w), 2 * hb + (i % 5) * (hb + h), w, h),
-                gen_setter(name),
-                gen_getter(name)
-            ) for i, name in enumerate(keys)
-            
-        ) + (
-            Button("menu.back", (540, 600, 200, 50), cls.close),
-        )
+
+        # X X KeyInput((716, 190))
+        # X X KeyInput((716, 290))
+        # X KeyInput((576, 390)) KeyInput((716, 390))

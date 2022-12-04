@@ -4,7 +4,7 @@ from pygame import Surface
 from pygame.locals import SRCALPHA
 
 from src.utils.consts import TILE_SIZE
-from src.display.resource_loader import ResourceLoader
+from src.display.resource import Resource
 
 
 class SpriteSheet:
@@ -62,7 +62,7 @@ class SpriteSheet:
     def load(cls):
         log.info("- spritesheets")
         for sprite_name, frames in cls.FRAMES.items():
-            surface = ResourceLoader[f"img.{sprite_name}"]
+            surface = Resource[f"img.{sprite_name}"]
             
             surfaces = {}
             
@@ -80,21 +80,26 @@ class SpriteSheet:
                     
                 surfaces[animation_name] = l
                     
-            ResourceLoader.add_animation(sprite_name, surfaces)
+            Resource.add_animation(sprite_name, surfaces)
     
     def __init__(self, name: str):
-        self.frames = ResourceLoader[f"anim.{name}"]
-        self.speeds = self.SPEEDS[name]
+        # self.frames = Resource[f"anim.{name}"]
+        # self.speeds = self.SPEEDS[name]
+        self.tmp = Resource.img(name)
+        self.animation_name = name
         
     def change_animation(self, animation_name: str):
-        self.animation_name = animation_name
-        self.current_animation = self.frames[animation_name]
-        self.current_speed = self.speeds[animation_name]
-        self.current_frame_idx = 0
+        # self.animation_name = animation_name
+        # self.current_animation = self.frames[animation_name]
+        # self.current_speed = self.speeds[animation_name]
+        # self.current_frame_idx = 0
+        pass
         
     def update(self, dt: int): # TODO : take care of 'dt'
-        self.current_frame_idx += self.current_speed
-        self.current_frame_idx %= len(self.current_animation)
+        # self.current_frame_idx += self.current_speed
+        # self.current_frame_idx %= len(self.current_animation)
+        pass
 
     def get_surface(self) -> Surface:
-        return self.current_animation[int(self.current_frame_idx)]
+        # return self.current_animation[int(self.current_frame_idx)]
+        return self.tmp

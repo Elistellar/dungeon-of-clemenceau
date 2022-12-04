@@ -1,46 +1,70 @@
-from pygame import Surface
-from pygame.display import flip, set_caption
-from pygame.display import set_mode as create_window
-from pygame.locals import SRCALPHA
-from pygame.transform import scale
+from enum import Enum
 
-from src.utils.consts import WINDOW_SIZE
+from pygame import Surface
+from pygame.display import flip, set_caption, set_icon
+from pygame.display import set_mode as open_window
+from pygame.display import toggle_fullscreen
+from pygame.locals import SRCALPHA
+from pygame.math import Vector2
+from pygame.transform import scale
 
 
 class Window:
-    """
-    Handle the window.
-    """
-    
-    TITLE = "Dungeon Of Clemenceau"
     
     ZOOM = 1.8
-    ZOOMED_SIZE = WINDOW_SIZE[0] * ZOOM, WINDOW_SIZE[1] * ZOOM
     
-    TOP_LEFT = (ZOOMED_SIZE[0] - WINDOW_SIZE[0]) // 2, (ZOOMED_SIZE[1] - WINDOW_SIZE[1]) // 2
-    CENTER_RECT = *TOP_LEFT, TOP_LEFT[0] + WINDOW_SIZE[0], TOP_LEFT[1] + WINDOW_SIZE[1]
+    class Size(Enum):
+        FULL_HD = 1980, 1080
+        HD      = 1280, 720
+        HD_W    = 1280, 657
     
     @classmethod
-    def create(cls):
-        cls._surface = create_window(WINDOW_SIZE)
-        cls.surface = cls._surface.copy()
-        cls.clean_hud_surface = Surface(cls._surface.get_size(), SRCALPHA)
-        cls.hud_surface = cls.clean_hud_surface.copy()
-        set_caption(cls.TITLE)
-
+    def init(cls, draw_size: Size, win_size: Size):
+        cls.resize(win_size)
+        
+        cls.surface = Surface(draw_size.value)
+        cls.hud_surface = Surface(draw_size.value, SRCALPHA)
+        
+        cls.blit = classmethod(cls.surface.blit)
+        
+    @classmethod
+    def set_title(cls, title: str):
+        set_caption(title)
+        
+    @classmethod
+    def set_icon(cls, icon: Surface):
+        set_icon(icon)
+        
+    @classmethod
+    def resize(cls, size: Size):
+        cls.__screen = open_window(size.value)
+        
+        cls.size = size
+        
+        cls.__draw_size = Vector2(size.value) * cls.ZOOM
+        win_size_vec = Vector2(size.value)
+        top_left_pos = (cls.__draw_size - win_size_vec) // 2
+        cls.__clipping = *top_left_pos, *(top_left_pos + win_size_vec)
+                
+    @classmethod
+    def toggle_fullscreen(cls):
+        """
+        Switch between fullscreen and window mode. 
+        """
+        toggle_fullscreen()
+    
     @classmethod
     def render(cls):
-        cls._surface.blit(
-            scale(
-                cls.surface,
-                cls.ZOOMED_SIZE
-            ),
+        
+        cls.__screen.blit(
+            scale(cls.surface, cls.__draw_size),
             (0, 0),
-            cls.CENTER_RECT
+            cls.__clipping
         )
-        cls._surface.blit(
-            cls.hud_surface,
+        
+        cls.__screen.blit(
+            scale(cls.hud_surface, cls.size.value),
             (0, 0)
         )
-        cls.hud_surface = cls.clean_hud_surface.copy()
+        
         flip()
