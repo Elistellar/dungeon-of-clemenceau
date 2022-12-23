@@ -135,7 +135,7 @@ class EventQueue(metaclass=EventQueueMeta):
         
         # menus
         mouse = get_mouse_pressed()
-        cls.click_pressed = mouse[0] or cls.__joystick.get_button(JOY_A)
+        cls.click_pressed = mouse[0] or (cls.__joystick and cls.__joystick.get_button(JOY_A))
         
         if cls.__joystick:
             x = cls.__joystick.get_axis(2) # horizontal right
